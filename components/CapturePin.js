@@ -16,7 +16,13 @@ export default function CapturePin(props) {
 
   return (
     <View style={globalStyles.container}>
-      <Text style={{fontSize: 40}}>{pin}</Text>
+      <Text style={globalStyles.HeadingOne}>Enter your 4 digit PIN</Text>
+      <View style={globalStyles.PinRow}>
+        <Text style={globalStyles.Pin}>{pin.charAt(0)}</Text>
+        <Text style={globalStyles.Pin}>{pin.charAt(1)}</Text>
+        <Text style={globalStyles.Pin}>{pin.charAt(2)}</Text>
+        <Text style={globalStyles.Pin}>{pin.charAt(3)}</Text>
+      </View>
       <TextInput
         style={{ left: -500 }}
         onChangeText={text => setPin(text)}
