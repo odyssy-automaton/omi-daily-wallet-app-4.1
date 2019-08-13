@@ -1,17 +1,23 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
+const { join } = require('path');
+const { lstatSync, realpathSync } = require('fs');
+
+let watchFolders = [];
+
+try {
+  let path = join(__dirname, 'node_modules', '@archanova', 'wallet-sdk');
+  const stats = lstatSync(path);
+  if (stats.isSymbolicLink()) {
+    watchFolders = [
+      realpathSync(path),
+    ];
+  }
+} catch (err) {
+  watchFolders = [];
+}
 
 module.exports = {
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
+  resolver: {
+    extraNodeModules: require("node-libs-browser")
   },
+  watchFolders
 };

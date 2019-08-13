@@ -9,6 +9,8 @@ import Header from "./components/Header";
 import CapturePin from "./components/CapturePin";
 import { globalStyles } from "./constants/styles";
 
+
+
 const AppNavigator = createStackNavigator(
   {
     Home: {
