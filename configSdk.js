@@ -6,9 +6,11 @@ import {
   SdkEnvironmentNames
 } from "@archanova/sdk";
 
-export function configureContainer() {
+const sdkEnv = getSdkEnvironment(SdkEnvironmentNames.Main);
+
+export const configureContainer = async()=> {
   const sdkEnvironment = getSdkEnvironment(SdkEnvironmentNames.Kovan);
-  const sdk = createSdk.createSdk(
+  const sdk = createSdk(
     sdkEnvironment
       .extendConfig("actionOptions", {
         autoAccept: true
@@ -35,7 +37,8 @@ export function configureContainer() {
       })
       .setConfig("storageAdapter", AsyncStorage)
   );
-  sdk.initialize().catch(() => null);
+  await sdk.initialize().catch(() => null);
+  console.log("sdk load? ", sdk.state)
 }
 
 
