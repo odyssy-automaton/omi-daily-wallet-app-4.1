@@ -10,12 +10,14 @@ import {
 import CurrencyIndicator from "../components/CurrencyIndicator";
 import { globalStyles } from "../constants/styles";
 import language from "../language";
-import { CurrentWalletContext } from "../contexts/Store";
+import { CurrentWalletContext, LanguageContext } from "../contexts/Store";
 
 console.log(language);
 
 export default function HomeScreen(props) {
   const [currentWallet] = useContext(CurrentWalletContext);
+  const [currentLanguage] = useContext(LanguageContext);
+  
   return (
     <View style={globalStyles.container}>
       <ImageBackground
@@ -23,7 +25,7 @@ export default function HomeScreen(props) {
         style={{ width: "100%", height: "100%" }}
       >
         <View style={globalStyles.container}>
-          <CurrencyIndicator label={language.balance} amount={currentWallet.balance + ' DAI'} />
+          <CurrencyIndicator label={language[currentLanguage].balance} amount={currentWallet.balance + ' DAI'} />
           <View style={globalStyles.flexRow}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate("Redeem")}

@@ -10,9 +10,11 @@ import {
   Modal,
   TouchableOpacity
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { globalStyles } from "../constants/styles";
 import { Formik } from "formik";
-import QRCode from 'react-qr-code';
+import QRCode from "react-qr-code";
 
 //console.log(globalStyles);
 const SendForm = props => {
@@ -46,6 +48,21 @@ const SendForm = props => {
     }
   };
 
+  getSendLinkPost = async (amount, senderAddress) => {
+    const postBody = {
+      amount,
+      senderAddress
+    };
+    let response = await fetch(
+      `https://rx4y9fk2r8.execute-api.us-east-1.amazonaws.com/dev/links/send`,
+      {
+        method: "post",
+        body: JSON.stringify(postBody)
+      }
+    );
+    return await response.json();
+  };
+
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
       <Modal
@@ -58,46 +75,47 @@ const SendForm = props => {
       >
         <View style={globalStyles.container}>
           <View>
-            <Button title="Hide Modal"
+            <Button
+              title="Hide Modal"
               onPress={() => {
                 setModalVisible(false);
               }}
-            >
-            </Button>
+            />
 
             <Text style={globalStyles.currencyHeading}>Send {amount} DAI</Text>
             <Text style={globalStyles.textLink}>{sendLink}</Text>
             <QRCode value={sendLink} />
 
-            <Button title="Share"
+            <Button
+              title="Share"
               onPress={() => {
                 onShare();
                 setModalVisible(false);
               }}
-            >
-            </Button>
-
+            />
           </View>
         </View>
       </Modal>
       <Formik
         initialValues={{ amount: "" }}
-        onSubmit={values => {
+        onSubmit={async values => {
           setAmount(values.amount);
-          setSendLink("https://vimeo.com/331858758");
+          const accountAddress = await AsyncStorage.getItem("accountAddress");
+          const sendObj = await getSendLinkPost(values.amount, accountAddress);
+          setSendLink(sendObj.url);
           setModalVisible(true);
           values.amount = "";
         }}
-        validate={(values) => {
-            let errors = {};
-            if (!values.amount) {
-              errors.amount = 'Required';
-            }
-            return errors;
-          }}
+        validate={values => {
+          let errors = {};
+          if (!values.amount) {
+            errors.amount = "Required";
+          }
+          return errors;
+        }}
       >
         {props => (
-          <View style={{alignItems: "center", justifyContent: "center" }}>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Text style={globalStyles.currencyHeading}>You will send</Text>
             <Image source={require("../assets/diamond.png")} />
             <View style={globalStyles.inputRow}>
@@ -115,7 +133,7 @@ const SendForm = props => {
 
             <TouchableOpacity onPress={props.handleSubmit}>
               <Text style={globalStyles.bigButton}>
-                <Image 
+                <Image
                   style={globalStyles.Icon}
                   source={require("../assets/send.png")}
                   resizeMode="contain"
