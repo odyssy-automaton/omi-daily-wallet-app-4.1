@@ -4,9 +4,9 @@ import {
   Text,
   View,
   TextInput,
-  ActivityIndicator,
-  AsyncStorage
+  ActivityIndicator
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import HomeScreen from "./screens/HomeScreen";
 import RedeemScreen from "./screens/RedeemScreen";
@@ -79,15 +79,15 @@ export default function App() {
     const checkPin = async () => {
       const wallet = await configureContainer();
       const asyncStore = await fetchAllStoreItems();
-      const walletId = await getWalletIdPost();
-      const connectWallet = await wallet.connectAccount(
-        walletId.accountAddress
-      );
+      //const walletId = await getWalletIdPost();
+      //const connectWallet = await wallet.connectAccount(
+      //  walletId.accountAddress
+      //);
       //logWallet(connectWallet);
-      console.log("wallet address response>>: ", walletId.accountAddress);
+      //console.log("wallet address response>>: ", walletId.accountAddress);
       console.log("async store>>: ", JSON.stringify(asyncStore));
-      console.log("wallet >>: ", wallet.state);
-      console.log("wallet connect>>: ", connectWallet);
+      console.log("wallet >>: ", wallet.state.initialized);
+      //console.log("wallet connect>>: ", connectWallet);
       try {
         // Retreive the credentials
 

@@ -1,4 +1,5 @@
-import { AsyncStorage, Linking } from "react-native";
+import { Linking } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   sdkModules,
   createSdk,
@@ -35,8 +36,8 @@ export const configureContainer = async () => {
       })
       .setConfig("storageAdapter", AsyncStorage)
   );
-  await sdk.initialize().catch(() => null);
-  //console.log("sdk load? ", sdk.state);
+  await sdk.initialize().catch((err) => console.log(err));
+  console.log("sdk load? ", sdk.state.initialized);
   return(sdk)
   
 };

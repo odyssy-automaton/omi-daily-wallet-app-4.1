@@ -14,7 +14,7 @@ import { globalStyles } from "../constants/styles";
 import { Formik } from "formik";
 import QRCode from 'react-qr-code';
 
-console.log(globalStyles);
+//console.log(globalStyles);
 const SendForm = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [sendLink, setSendLink] = useState("");
