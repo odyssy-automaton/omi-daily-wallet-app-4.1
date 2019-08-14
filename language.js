@@ -3,13 +3,8 @@ const languages = {
     balance: "Balance"
   },
   es: {
-    balance: "Balance"
+    balance: "Balancio"
   }
 };
 
-//todo: toggle based on device language
-const language = languages.en;
-
-export default {
-  ...language
-};
+export default languages;

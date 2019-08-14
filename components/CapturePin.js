@@ -7,16 +7,23 @@ export default function CapturePin(props) {
   const [pin, setPin] = useState("");
   if (pin.length === 4) {
       setPin("");
+      if(props.isFirstTimePin) {
+        props.handleNewPin(pin);
+        //TODO: notify user of succcess
+        props.onSuccess();
+      }
     if (pin === props.pin) {
       props.onSuccess();
     } else {
       
     }
   }
+  
+  const label = props.isFirstTimePin ? "Enter a new 4 digit PIN" : "Enter your 4 digit PIN";
 
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.HeadingOne}>Enter your 4 digit PIN</Text>
+      <Text style={globalStyles.HeadingOne}>{label}</Text>
       <View style={globalStyles.PinRow}>
         <Text style={globalStyles.Pin}>{pin.charAt(0)}</Text>
         <Text style={globalStyles.Pin}>{pin.charAt(1)}</Text>
