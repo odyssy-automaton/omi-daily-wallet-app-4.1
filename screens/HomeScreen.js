@@ -30,24 +30,25 @@ export default function HomeScreen(props) {
             <TouchableOpacity
               onPress={() => props.navigation.navigate("Redeem")}
             >
-              <Text style={globalStyles.bigButton}>
+              <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
                   source={require("../assets/receive.png")}
                   style={{ height: 100, width: 100 }}
                   resizeMode="contain"
                 />
-              </Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigation.navigate("Send")}>
-              <Text style={globalStyles.bigButton}>
+
+            <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
                   source={require("../assets/send.png")}
                   style={{ height: 100, width: 100 }}
                   resizeMode="contain"
                 />
-              </Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
