@@ -65,7 +65,7 @@ const Store = ({ children }) => {
       console.log("connectWallet", connectWallet);
 
       setCurrentWallet({
-        balance: weiToEth(wallet.state.account.balance.real).toString(),
+        balance: weiToEth(wallet.state.account.balance.real).toFixed(2),
         sdk: wallet
       });
     };
@@ -78,10 +78,10 @@ const Store = ({ children }) => {
     console.log("account sdk?", sdk.state.account);
     console.log(
       "wallet account balance >>: ",
-      weiToEth(sdk.state.account.balance.real).toString()
+      weiToEth(sdk.state.account.balance.real).toFixed(2)
     );
     setCurrentWallet({
-      balance: weiToEth(sdk.state.account.balance.real).toString(),
+      balance: weiToEth(sdk.state.account.balance.real).toFixed(2),
       sdk
     });
   }, 10000);

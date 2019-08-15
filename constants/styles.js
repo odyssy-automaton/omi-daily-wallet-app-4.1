@@ -43,6 +43,23 @@ export const globalStyles = StyleSheet.create({
     marginRight: 25
   },
 
+  bigButtonView: {
+    borderColor: "transparent",
+    borderRadius: 50,
+    borderWidth: 0,
+    borderStyle: "solid",
+    backgroundColor: "rgba(0, 51, 255, 1.0)",
+    width: 100,
+    height: 100,
+    textAlign: "center",
+    fontSize: 21,
+    fontWeight: "700",
+    color: "white",
+    overflow: "hidden",
+    marginTop: 50,
+    marginLeft: 25,
+    marginRight: 25
+  },
   currencyText: {
     fontSize: 28,
     fontWeight: "bold"

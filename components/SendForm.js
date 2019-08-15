@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,19 +8,25 @@ import {
   TextInput,
   Share,
   Modal,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { globalStyles } from "../constants/styles";
 import { Formik } from "formik";
 import QRCode from "react-qr-code";
+import { CurrentWalletContext } from "../contexts/Store";
 
 //console.log(globalStyles);
 const SendForm = props => {
+  const [currentWallet] = useContext(CurrentWalletContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [sendLink, setSendLink] = useState("");
   const [amount, setAmount] = useState(false);
+  const [submitToModal, setsubmitToModal] = useState(false);
+
+  console.log("send current balance", currentWallet.balance);
 
   setClipBoardContent = async content => {
     await Clipboard.setString(content);
@@ -70,46 +76,71 @@ const SendForm = props => {
         transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          setSendLink("");
+          setModalVisible(false);
         }}
       >
         <View style={globalStyles.container}>
-          <View>
-            <Button
-              title="Hide Modal"
-              onPress={() => {
-                setModalVisible(false);
-              }}
-            />
+          <Button
+            title="Cancel"
+            onPress={() => {
+              setModalVisible(false);
+            }}
+          />
 
-            <Text style={globalStyles.currencyHeading}>Send {amount} DAI</Text>
-            <Text style={globalStyles.textLink}>{sendLink}</Text>
-            <QRCode value={sendLink} />
-
-            <Button
-              title="Share"
-              onPress={() => {
-                onShare();
-                setModalVisible(false);
-              }}
+          {!sendLink ? (
+            <ActivityIndicator
+              style={{ marginTop: 20 }}
+              size="large"
+              color="#0000ff"
             />
-          </View>
+          ) : (
+            <View style={globalStyles.container}>
+              <Text style={globalStyles.currencyHeading}>
+                Send {amount} DAI
+              </Text>
+              <Text>Share with QR or press button for link</Text>
+              {/* <Text style={globalStyles.textLink}>{sendLink}</Text> */}
+              <QRCode value={sendLink} />
+
+              <TouchableOpacity
+                onPress={() => {
+                  onShare();
+                  setModalVisible(false);
+                }}
+                disabled={props.isSubmitting || submitToModal}
+              >
+                <View style={globalStyles.bigButtonView}>
+                  <Image
+                    style={globalStyles.Icon}
+                    source={require("../assets/send.png")}
+                    resizeMode="contain"
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </Modal>
       <Formik
         initialValues={{ amount: "" }}
-        onSubmit={async values => {
+        onSubmit={async (values, { setSubmitting }) => {
           setAmount(values.amount);
+          setModalVisible(true);
+
           const accountAddress = await AsyncStorage.getItem("accountAddress");
           const sendObj = await getSendLinkPost(values.amount, accountAddress);
           setSendLink(sendObj.url);
-          setModalVisible(true);
+          setSubmitting(false);
           values.amount = "";
         }}
         validate={values => {
           let errors = {};
           if (!values.amount) {
             errors.amount = "Required";
+          }
+          if (parseFloat(values.amount) > parseFloat(currentWallet.balance)) {
+            errors.amount = "Not enough funds to send that much";
           }
           return errors;
         }}
@@ -130,15 +161,18 @@ const SendForm = props => {
               />
               <Text style={globalStyles.inputTextRight}>DAI</Text>
             </View>
-
-            <TouchableOpacity onPress={props.handleSubmit}>
-              <Text style={globalStyles.bigButton}>
+            {props.errors.amount && <Text>! {props.errors.amount}</Text>}
+            <TouchableOpacity
+              onPress={props.handleSubmit}
+              disabled={props.isSubmitting || submitToModal}
+            >
+              <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
                   source={require("../assets/send.png")}
                   resizeMode="contain"
                 />
-              </Text>
+              </View>
             </TouchableOpacity>
           </View>
         )}
