@@ -9,7 +9,8 @@ import {
   Share,
   Modal,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Clipboard
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
