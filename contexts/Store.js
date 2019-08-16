@@ -73,17 +73,14 @@ const Store = ({ children }) => {
   }, []);
 
   useInterval(async () => {
-    console.log("interval");
-    console.log(sdk.state.initialized);
-    console.log("account sdk?", sdk.state.account);
-    console.log(
-      "wallet account balance >>: ",
-      weiToEth(sdk.state.account.balance.real).toFixed(2)
-    );
-    setCurrentWallet({
-      balance: weiToEth(sdk.state.account.balance.real).toFixed(2),
-      sdk
-    });
+
+    if(sdk.state.account){
+      setCurrentWallet({
+        balance: weiToEth(sdk.state.account.balance.real).toFixed(2),
+        sdk
+      });
+    }
+
   }, 10000);
 
   return (
