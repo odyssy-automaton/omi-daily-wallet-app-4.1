@@ -96,10 +96,10 @@ const SendForm = props => {
                   setModalVisible(false);
                 }}
               /> */}
-              <Text style={globalStyles.currencyHeading}>
+              <Text style={globalStyles.HeadingOne}>
                 Send {amount} DAI
               </Text>
-              <Text>Share with QR or press button for link</Text>
+              <Text style={globalStyles.paragraph}>Share with QR or press button for link</Text>
               {/* <Text style={globalStyles.textLink}>{sendLink}</Text> */}
               <QRCode value={sendLink} />
 
@@ -113,10 +113,11 @@ const SendForm = props => {
                 <View style={globalStyles.bigButtonView}>
                   <Image
                     style={globalStyles.Icon}
-                    source={require("../assets/send.png")}
+                    source={require("../assets/link.png")}
                     resizeMode="contain"
                   />
                 </View>
+                <Text style={globalStyles.bigButtonText}>Copy Link</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -161,7 +162,7 @@ const SendForm = props => {
               />
               <Text style={globalStyles.inputTextRight}>DAI</Text>
             </View>
-            {props.errors.amount && <Text>! {props.errors.amount}</Text>}
+            {props.errors.amount && <Text style={globalStyles.ErrorMessage}>! {props.errors.amount}</Text>}
             <TouchableOpacity
               onPress={props.handleSubmit}
               disabled={props.isSubmitting || submitToModal}
