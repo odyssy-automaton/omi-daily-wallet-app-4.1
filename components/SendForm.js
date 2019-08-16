@@ -82,13 +82,6 @@ const SendForm = props => {
         }}
       >
         <View style={globalStyles.container}>
-          <Button
-            title="Cancel"
-            onPress={() => {
-              setModalVisible(false);
-            }}
-          />
-
           {!sendLink ? (
             <ActivityIndicator
               style={{ marginTop: 20 }}
@@ -97,6 +90,12 @@ const SendForm = props => {
             />
           ) : (
             <View style={globalStyles.container}>
+              {/* <Button
+                title="Cancel"
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              /> */}
               <Text style={globalStyles.currencyHeading}>
                 Send {amount} DAI
               </Text>
@@ -125,7 +124,7 @@ const SendForm = props => {
       </Modal>
       <Formik
         initialValues={{ amount: "" }}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           setAmount(values.amount);
           setModalVisible(true);
 
@@ -133,7 +132,7 @@ const SendForm = props => {
           const sendObj = await getSendLinkPost(values.amount, accountAddress);
           setSendLink(sendObj.url);
           setSubmitting(false);
-          values.amount = "";
+          resetForm();
         }}
         validate={values => {
           let errors = {};
