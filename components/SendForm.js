@@ -113,7 +113,7 @@ const SendForm = props => {
                 <View style={globalStyles.bigButtonView}>
                   <Image
                     style={globalStyles.Icon}
-                    source={require("../assets/send.png")}
+                    source={require("../assets/link.png")}
                     resizeMode="contain"
                   />
                 </View>
