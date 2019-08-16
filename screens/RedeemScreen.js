@@ -23,6 +23,7 @@ import useInterval from "../util/PollingUtil";
 export default function RedeemScreen(props) {
   const [link, setLink] = useState();
   const [cbRedeemLink, setCbRedeemLink] = useState("");
+  const [invalidLinkError, setInvalidLinkError] = useState("");
   const [balanceWatch, setBalanceWatch] = useState();
   const [balanceUpdated, setBalanceUpdated] = useState(false);
   const [watchDelay, setWatchDelay] = useState(null);
@@ -56,6 +57,13 @@ export default function RedeemScreen(props) {
     console.log("clipboadData", clipboadData);
     if (clipboadData.indexOf(config.redeemLinkHost) > -1) {
       setCbRedeemLink(clipboadData);
+      const res = await fetchLink(clipboadData)
+      if (res.error) {
+        setInvalidLinkError(res.error);
+      } else {
+        setInvalidLinkError("");
+        setLink(res);
+      }
     }
   };
 
@@ -64,10 +72,10 @@ export default function RedeemScreen(props) {
       const linkId = link.split("?id=")[1];
       let response = await fetch(`${config.apiUrl}links/get/${linkId}`);
       response = await response.json();
-      console.log("*********************", response);
 
-      setLink(response);
+      return response;
     }
+    return { error: "Invalid link" };
   };
 
   const redeemPut = async (linkId, redeemAddress) => {
@@ -214,9 +222,24 @@ export default function RedeemScreen(props) {
                   )}
 
                   <TouchableOpacity
-                    onPress={() => fetchLink(props.values.redeemLink)}
-                    disabled={props.isSubmitting || !props.values.redeemLink}
-                    style={!props.values.redeemLink && { opacity: 0.5 }}
+                    onPress={async () => {
+                      const res = await fetchLink(props.values.redeemLink);
+                      if (res.error) {
+                        setInvalidLinkError(res.error);
+                      } else {
+                        setInvalidLinkError("");
+                        setLink(res);
+                      }
+                    }}
+                    disabled={
+                      props.isSubmitting ||
+                      invalidLinkError !== "" ||
+                      !props.values.redeemLink
+                    }
+                    style={
+                      (!props.values.redeemLink ||
+                      !invalidLinkError) && { opacity: 0.5 }
+                    }
                   >
                     <View style={globalStyles.bigButtonView}>
                       <Image
@@ -225,7 +248,13 @@ export default function RedeemScreen(props) {
                         resizeMode="contain"
                       />
                     </View>
-                    <Text style={globalStyles.bigButtonText}>Continue</Text>
+                    {invalidLinkError ? (
+                      <Text style={globalStyles.bigButtonText}>
+                        {invalidLinkError}
+                      </Text>
+                    ) : (
+                      <Text style={globalStyles.bigButtonText}>Continue</Text>
+                    )}
                   </TouchableOpacity>
                   {/* {props.values.redeemLink ? ( null ) : null } */}
                 </View>
