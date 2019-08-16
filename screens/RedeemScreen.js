@@ -57,9 +57,10 @@ export default function RedeemScreen(props) {
     console.log("clipboadData", clipboadData);
     if (clipboadData.indexOf(config.redeemLinkHost) > -1) {
       setCbRedeemLink(clipboadData);
-      const res = await fetchLink(clipboadData)
+      const res = await fetchLink(clipboadData);
       if (res.error) {
         setInvalidLinkError(res.error);
+        setCbRedeemLink("");
       } else {
         setInvalidLinkError("");
         setLink(res);
@@ -226,19 +227,17 @@ export default function RedeemScreen(props) {
                       const res = await fetchLink(props.values.redeemLink);
                       if (res.error) {
                         setInvalidLinkError(res.error);
+                        setCbRedeemLink("");
                       } else {
                         setInvalidLinkError("");
                         setLink(res);
                       }
                     }}
-                    disabled={
-                      props.isSubmitting ||
-                      invalidLinkError !== "" ||
-                      !props.values.redeemLink
-                    }
+                    disabled={props.isSubmitting || !props.values.redeemLink}
                     style={
-                      (!props.values.redeemLink ||
-                      !invalidLinkError) && { opacity: 0.5 }
+                      (!props.values.redeemLink || !invalidLinkError) && {
+                        opacity: 0.5
+                      }
                     }
                   >
                     <View style={globalStyles.bigButtonView}>
