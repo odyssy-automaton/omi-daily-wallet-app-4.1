@@ -15,7 +15,14 @@ export const globalStyles = StyleSheet.create({
   currencyHeading: {
     fontSize: 18,
     fontWeight: "700",
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 20
+  },
+  paragraph: {
+    fontSize: 18,
+    fontWeight: "400",
+    marginBottom: 20,
+    marginTop: 20
   },
   flexRow: {
     flex: 0,
@@ -59,6 +66,13 @@ export const globalStyles = StyleSheet.create({
     marginTop: 50,
     marginLeft: 25,
     marginRight: 25
+  },
+  bigButtonText: {
+    fontSize: 21,
+    fontWeight: "700",
+    color: "rgba(0, 51, 255, 1.0)",
+    textAlign: "center",
+    marginTop: 10,
   },
   currencyText: {
     fontSize: 28,
@@ -113,17 +127,21 @@ export const globalStyles = StyleSheet.create({
     flex: 0,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputText: {
     fontSize: 28,
     fontWeight: "700",
-    width: undefined,
     borderBottomColor: "rgba(0, 51, 255, 1.0)",
-    marginRight: 10
+    marginRight: 5,
+    minWidth: 100,
+    textAlign: "left"
   },
   inputTextRight: {
     fontSize: 28,
     fontWeight: "700"
+  },
+  ErrorMessage: {
+    color: "red",
   }
 });

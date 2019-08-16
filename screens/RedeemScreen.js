@@ -194,11 +194,11 @@ export default function RedeemScreen(props) {
                     Import Redeem Link
                   </Text>
                   {cbRedeemLink ? (
-                    <Text>✔ Link Imported</Text>
+                    <Text>Link Imported</Text>
                   ) : (
                     <Button
                       onPress={() => getClipBoard()}
-                      title="check clipboad"
+                      title="Check Clipboard"
                     />
                   )}
 
@@ -221,14 +221,13 @@ export default function RedeemScreen(props) {
                     <View style={globalStyles.bigButtonView}>
                       <Image
                         style={globalStyles.Icon}
-                        source={require("../assets/receive.png")}
+                        source={require("../assets/arrow-forward.png")}
                         resizeMode="contain"
                       />
                     </View>
+                    <Text style={globalStyles.bigButtonText}>Continue</Text>
                   </TouchableOpacity>
-                  {props.values.redeemLink ? (
-                    <Text style={{ paddingTop: 10 }}>Continue</Text>
-                  ) : null}
+                  {/* {props.values.redeemLink ? ( null ) : null } */}
                 </View>
               )}
             </View>
