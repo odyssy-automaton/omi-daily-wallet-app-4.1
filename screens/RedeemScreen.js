@@ -14,8 +14,8 @@ import { Formik } from "formik";
 
 import CurrencyIndicator from "../components/CurrencyIndicator";
 import { globalStyles } from "../constants/styles";
-
-import { CurrentWalletContext } from "../contexts/Store";
+import language from "../language";
+import { CurrentWalletContext, LanguageContext } from "../contexts/Store";
 
 import config from "../config";
 import useInterval from "../util/PollingUtil";
@@ -31,6 +31,7 @@ export default function RedeemScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [currentWallet] = useContext(CurrentWalletContext);
+  const [currentLanguage] = useContext(LanguageContext);
 
   // get link in clipboad with param id=
   // validate right host
@@ -167,7 +168,7 @@ export default function RedeemScreen(props) {
           validate={values => {
             let errors = {};
             if (!values.redeemLink) {
-              errors.redeemLink = "Required";
+              errors.redeemLink = language[currentLanguage].send.required;
             }
             return errors;
           }}
@@ -177,7 +178,7 @@ export default function RedeemScreen(props) {
               {link ? (
                 <View style={globalStyles.container}>
                   <CurrencyIndicator
-                    label="You will redeem"
+                    label={language[currentLanguage].redeem.willRedeem}
                     amount={`${link.amount} DAI`}
                   />
 
@@ -200,10 +201,10 @@ export default function RedeemScreen(props) {
               ) : (
                 <View style={globalStyles.container}>
                   <Text style={globalStyles.currencyHeading}>
-                    Import Redeem Link
+                    {language[currentLanguage].redeem.import}
                   </Text>
                   {cbRedeemLink ? (
-                    <Text>Link Imported</Text>
+                    <Text>{language[currentLanguage].redeem.imported}</Text>
                   ) : (
                     <Button
                       onPress={() => getClipBoard()}
@@ -252,7 +253,9 @@ export default function RedeemScreen(props) {
                         {invalidLinkError}
                       </Text>
                     ) : (
-                      <Text style={globalStyles.bigButtonText}>Continue</Text>
+                      <Text style={globalStyles.bigButtonText}>
+                        {language[currentLanguage].redeem.continue}
+                      </Text>
                     )}
                   </TouchableOpacity>
                   {/* {props.values.redeemLink ? ( null ) : null } */}

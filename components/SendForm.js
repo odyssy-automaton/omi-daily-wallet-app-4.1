@@ -17,11 +17,14 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { globalStyles } from "../constants/styles";
 import { Formik } from "formik";
 import QRCode from "react-qr-code";
-import { CurrentWalletContext } from "../contexts/Store";
+import language from "../language";
+import config from "../config";
+import { CurrentWalletContext, LanguageContext } from "../contexts/Store";
 
 //console.log(globalStyles);
 const SendForm = props => {
   const [currentWallet] = useContext(CurrentWalletContext);
+  const [currentLanguage] = useContext(LanguageContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [sendLink, setSendLink] = useState("");
   const [amount, setAmount] = useState(false);
@@ -47,7 +50,6 @@ const SendForm = props => {
         }
       } else if (result.action === Share.dismissedAction) {
         console.log("dismissed");
-        // dismissed
       }
     } catch (error) {
       console.log(error);
@@ -60,13 +62,10 @@ const SendForm = props => {
       amount,
       senderAddress
     };
-    let response = await fetch(
-      `https://rx4y9fk2r8.execute-api.us-east-1.amazonaws.com/dev/links/send`,
-      {
-        method: "post",
-        body: JSON.stringify(postBody)
-      }
-    );
+    let response = await fetch(`${config.apiUrl}links/send`, {
+      method: "post",
+      body: JSON.stringify(postBody)
+    });
     return await response.json();
   };
 
@@ -96,10 +95,10 @@ const SendForm = props => {
                   setModalVisible(false);
                 }}
               /> */}
-              <Text style={globalStyles.HeadingOne}>
-                Send {amount} DAI
+              <Text style={globalStyles.HeadingOne}>Send {amount} DAI</Text>
+              <Text style={globalStyles.paragraph}>
+                {language[currentLanguage].send.shareSimple}
               </Text>
-              <Text style={globalStyles.paragraph}>Share with QR or press button for link</Text>
               {/* <Text style={globalStyles.textLink}>{sendLink}</Text> */}
               <QRCode value={sendLink} />
 
@@ -117,7 +116,9 @@ const SendForm = props => {
                     resizeMode="contain"
                   />
                 </View>
-                <Text style={globalStyles.bigButtonText}>Copy Link</Text>
+                <Text style={globalStyles.bigButtonText}>
+                  {language[currentLanguage].send.copy}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
@@ -138,17 +139,19 @@ const SendForm = props => {
         validate={values => {
           let errors = {};
           if (!values.amount) {
-            errors.amount = "Required";
+            errors.amount = language[currentLanguage].send.required;
           }
           if (parseFloat(values.amount) > parseFloat(currentWallet.balance)) {
-            errors.amount = "Not enough funds to send that much";
+            errors.amount = language[currentLanguage].send.fundsError;
           }
           return errors;
         }}
       >
         {props => (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Text style={globalStyles.currencyHeading}>You will send</Text>
+            <Text style={globalStyles.currencyHeading}>
+              {language[currentLanguage].send.willSend}
+            </Text>
             <Image source={require("../assets/diamond.png")} />
             <View style={globalStyles.inputRow}>
               <TextInput
@@ -162,7 +165,11 @@ const SendForm = props => {
               />
               <Text style={globalStyles.inputTextRight}>DAI</Text>
             </View>
-            {props.errors.amount && <Text style={globalStyles.ErrorMessage}>! {props.errors.amount}</Text>}
+            {props.errors.amount && (
+              <Text style={globalStyles.ErrorMessage}>
+                ! {props.errors.amount}
+              </Text>
+            )}
             <TouchableOpacity
               onPress={props.handleSubmit}
               disabled={props.isSubmitting || submitToModal}

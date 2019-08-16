@@ -1,23 +1,14 @@
-import React, {useContext} from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ImageBackground
-} from "react-native";
+import React, { useContext } from "react";
+import { View, Image, TouchableOpacity, ImageBackground } from "react-native";
 import CurrencyIndicator from "../components/CurrencyIndicator";
 import { globalStyles } from "../constants/styles";
 import language from "../language";
 import { CurrentWalletContext, LanguageContext } from "../contexts/Store";
 
-console.log(language);
-
 export default function HomeScreen(props) {
   const [currentWallet] = useContext(CurrentWalletContext);
   const [currentLanguage] = useContext(LanguageContext);
-  
+
   return (
     <View style={globalStyles.container}>
       <ImageBackground
@@ -26,9 +17,15 @@ export default function HomeScreen(props) {
       >
         <View style={globalStyles.container}>
           {currentWallet ? (
-          <CurrencyIndicator label={language[currentLanguage].balance} amount={currentWallet.balance + ' DAI'} />
+            <CurrencyIndicator
+              label={language[currentLanguage].home.balance}
+              amount={currentWallet.balance + " DAI"}
+            />
           ) : (
-            <CurrencyIndicator label={'Loading'} amount={' DAI'} />
+            <CurrencyIndicator
+              label={language[currentLanguage].global.loading}
+              amount={" DAI"}
+            />
           )}
           <View style={globalStyles.flexRow}>
             <TouchableOpacity
@@ -44,8 +41,7 @@ export default function HomeScreen(props) {
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigation.navigate("Send")}>
-
-            <View style={globalStyles.bigButtonView}>
+              <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
                   source={require("../assets/send.png")}

@@ -1,25 +1,29 @@
-import React, { useState } from "react";
-import { Text, View, Button, Image, TextInput } from "react-native";
-import CurrencyIndicator from "../components/CurrencyIndicator";
+import React, { useState, useContext } from "react";
+import { Text, View, TextInput } from "react-native";
 import { globalStyles } from "../constants/styles";
+import language from "../language";
+import { LanguageContext } from "../contexts/Store";
 
 export default function CapturePin(props) {
+  const [currentLanguage] = useContext(LanguageContext);
   const [pin, setPin] = useState("");
+
   if (pin.length === 4) {
-      setPin("");
-      if(props.isFirstTimePin) {
-        props.handleNewPin(pin);
-        //TODO: notify user of succcess
-        props.onSuccess();
-      }
+    setPin("");
+    if (props.isFirstTimePin) {
+      props.handleNewPin(pin);
+      //TODO: notify user of succcess
+      props.onSuccess();
+    }
     if (pin === props.pin) {
       props.onSuccess();
     } else {
-      
     }
   }
-  
-  const label = props.isFirstTimePin ? "Enter a new 4 digit PIN" : "Enter your 4 digit PIN";
+
+  const label = props.isFirstTimePin
+    ? language[currentLanguage].onboarding.create
+    : language[currentLanguage].onboarding.enter;
 
   return (
     <View style={globalStyles.container}>
