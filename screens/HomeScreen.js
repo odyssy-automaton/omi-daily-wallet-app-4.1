@@ -25,7 +25,11 @@ export default function HomeScreen(props) {
         style={{ width: "100%", height: "100%" }}
       >
         <View style={globalStyles.container}>
+          {currentWallet ? (
           <CurrencyIndicator label={language[currentLanguage].balance} amount={currentWallet.balance + ' DAI'} />
+          ) : (
+            <CurrencyIndicator label={'Loading'} amount={' DAI'} />
+          )}
           <View style={globalStyles.flexRow}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate("Redeem")}
