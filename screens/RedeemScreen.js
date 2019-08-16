@@ -44,7 +44,7 @@ export default function RedeemScreen(props) {
   useInterval(async () => {
     console.log("watching,", balanceWatch, currentWallet.balance, watchCount);
     setWatchCount(watchCount + 1);
-    if (+currentWallet.balance > +balanceWatch  || watchCount > 15) {
+    if (+currentWallet.balance > +balanceWatch || watchCount > 15) {
       setBalanceUpdated(true);
       setWatchDelay(null);
       setCbRedeemLink("");
@@ -54,9 +54,9 @@ export default function RedeemScreen(props) {
   const getClipBoard = async () => {
     const clipboadData = await Clipboard.getString("redeemLinkHost");
     console.log("clipboadData", clipboadData);
-    //if(clipboadData.indexOf(config.redeemLinkHost)){
+    if (clipboadData.indexOf(config.redeemLinkHost) > -1) {
       setCbRedeemLink(clipboadData);
-    //}
+    }
   };
 
   const fetchLink = async link => {
@@ -113,11 +113,11 @@ export default function RedeemScreen(props) {
                 }}
               >
                 <View style={globalStyles.bigButtonView}>
-                <Image
-                  style={globalStyles.Icon}
-                  source={require("../assets/diamond.png")}
-                  resizeMode="contain"
-                />
+                  <Image
+                    style={globalStyles.Icon}
+                    source={require("../assets/diamond.png")}
+                    resizeMode="contain"
+                  />
                 </View>
               </TouchableOpacity>
             </View>
@@ -135,6 +135,7 @@ export default function RedeemScreen(props) {
               link.linkId,
               currentWallet.sdk.state.account.address
             );
+            setStatus(null);
             setBalanceWatch(currentWallet.balance);
             setModalVisible(true);
             const redeemResponse = await redeemPut(
@@ -146,13 +147,13 @@ export default function RedeemScreen(props) {
             if (!redeemResponse.error) {
               setLink("");
               setWatchDelay(1000);
-              
             } else {
+              console.log("error error error", redeemResponse.error);
               //errors.redeemLink = redeemResponse.error;
               setModalVisible(false);
-              setStatus(redeemResponse.error)
+              setStatus(redeemResponse.error);
             }
-            //setSubmitting
+            setSubmitting(false);
           }}
           validate={values => {
             let errors = {};
@@ -183,14 +184,23 @@ export default function RedeemScreen(props) {
                       />
                     </View>
                   </TouchableOpacity>
-                {props.errors.redeemLink && <Text>{props.errors.redeemLink}</Text>}
-
+                  {props.status && (
+                    <Text style={{ paddingTop: 10 }}>{props.status}</Text>
+                  )}
                 </View>
               ) : (
                 <View style={globalStyles.container}>
-                  <Text style={globalStyles.currencyHeading}>Redeem</Text>
-                  {cbRedeemLink ? (<Text>Link Imported</Text>) :
-                  (<Text>Import Link</Text>)}
+                  <Text style={globalStyles.currencyHeading}>
+                    Import Redeem Link
+                  </Text>
+                  {cbRedeemLink ? (
+                    <Text>✔ Link Imported</Text>
+                  ) : (
+                    <Button
+                      onPress={() => getClipBoard()}
+                      title="check clipboad"
+                    />
+                  )}
 
                   <TextInput
                     style={{ left: -500 }}
@@ -202,13 +212,11 @@ export default function RedeemScreen(props) {
                   {props.errors.redeemLink && (
                     <Text>{props.errors.redeemLink}</Text>
                   )}
-                  <Button
-                    onPress={() => getClipBoard()}
-                    title="check clipboad"
-                  />
+
                   <TouchableOpacity
                     onPress={() => fetchLink(props.values.redeemLink)}
-                    disabled={props.isSubmitting}
+                    disabled={props.isSubmitting || !props.values.redeemLink}
+                    style={!props.values.redeemLink && { opacity: 0.5 }}
                   >
                     <View style={globalStyles.bigButtonView}>
                       <Image
@@ -218,6 +226,9 @@ export default function RedeemScreen(props) {
                       />
                     </View>
                   </TouchableOpacity>
+                  {props.values.redeemLink ? (
+                    <Text style={{ paddingTop: 10 }}>Continue</Text>
+                  ) : null}
                 </View>
               )}
             </View>
