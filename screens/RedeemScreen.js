@@ -66,7 +66,6 @@ export default function RedeemScreen(props) {
       } else {
         setInvalidLinkError("");
         setLink(res);
-        setRedeemAmount(res.amount)
       }
     } else {
       setInvalidLinkError('Invalid Link');
