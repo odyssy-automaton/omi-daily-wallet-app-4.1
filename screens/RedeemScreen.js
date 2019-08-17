@@ -54,18 +54,22 @@ export default function RedeemScreen(props) {
   }, watchDelay);
 
   const getClipBoard = async () => {
+    setInvalidLinkError("");
     const clipboadData = await Clipboard.getString("redeemLinkHost");
-    console.log("clipboadData", clipboadData);
     if (clipboadData.indexOf(config.redeemLinkHost) > -1) {
       setCbRedeemLink(clipboadData);
       const res = await fetchLink(clipboadData);
       if (res.error) {
         setInvalidLinkError(res.error);
         setCbRedeemLink("");
+        setLink("");
       } else {
         setInvalidLinkError("");
         setLink(res);
+        setRedeemAmount(res.amount)
       }
+    } else {
+      setInvalidLinkError('Invalid Link');
     }
   };
 
@@ -107,14 +111,17 @@ export default function RedeemScreen(props) {
       >
         <View style={globalStyles.container}>
           {!balanceUpdated ? (
+            <Fragment>
+            <Text style={globalStyles.currencyHeading}>Redeeming DAI</Text>
             <ActivityIndicator
               style={{ marginTop: 20 }}
               size="large"
               color="#0000ff"
             />
+            </Fragment>
           ) : (
             <View style={globalStyles.container}>
-              <Text style={globalStyles.currencyHeading}>Redeemed DAI</Text>
+              <Text style={globalStyles.currencyHeading}>{language[currentLanguage].redeem.success}</Text>
 
               <TouchableOpacity
                 onPress={() => {
@@ -122,13 +129,9 @@ export default function RedeemScreen(props) {
                   props.navigation.navigate("Home");
                 }}
               >
-                <View style={globalStyles.bigButtonView}>
-                  <Image
-                    style={globalStyles.Icon}
-                    source={require("../assets/diamond.png")}
-                    resizeMode="contain"
-                  />
-                </View>
+                  <Text>🎉 {link.amount} DAI 🎉</Text>
+                  <Text> Return Home</Text>
+
               </TouchableOpacity>
             </View>
           )}
@@ -140,11 +143,6 @@ export default function RedeemScreen(props) {
           enableReinitialize
           initialValues={{ redeemLink: cbRedeemLink }}
           onSubmit={async (values, { setSubmitting, setStatus }) => {
-            console.log(
-              "redeem",
-              link.linkId,
-              currentWallet.sdk.state.account.address
-            );
             setStatus(null);
             setBalanceWatch(currentWallet.balance);
             setModalVisible(true);
@@ -152,14 +150,10 @@ export default function RedeemScreen(props) {
               link.linkId,
               currentWallet.sdk.state.account.address
             );
-            //const redeemResponse = { success: true };
             console.log("redeemResponse", redeemResponse);
             if (!redeemResponse.error) {
-              setLink("");
               setWatchDelay(1000);
             } else {
-              console.log("error error error", redeemResponse.error);
-              //errors.redeemLink = redeemResponse.error;
               setModalVisible(false);
               setStatus(redeemResponse.error);
             }
@@ -219,46 +213,14 @@ export default function RedeemScreen(props) {
                     onBlur={props.handleBlur("redeemLink")}
                     maxLength={100}
                   />
-                  {props.errors.redeemLink && (
-                    <Text>{props.errors.redeemLink}</Text>
-                  )}
-
-                  <TouchableOpacity
-                    onPress={async () => {
-                      const res = await fetchLink(props.values.redeemLink);
-                      if (res.error) {
-                        setInvalidLinkError(res.error);
-                        setCbRedeemLink("");
-                      } else {
-                        setInvalidLinkError("");
-                        setLink(res);
-                      }
-                    }}
-                    disabled={props.isSubmitting || !props.values.redeemLink}
-                    style={
-                      (!props.values.redeemLink || !invalidLinkError) && {
-                        opacity: 0.5
-                      }
-                    }
-                  >
-                    <View style={globalStyles.bigButtonView}>
-                      <Image
-                        style={globalStyles.Icon}
-                        source={require("../assets/arrow-forward.png")}
-                        resizeMode="contain"
-                      />
-                    </View>
-                    {invalidLinkError ? (
-                      <Text style={globalStyles.bigButtonText}>
-                        {invalidLinkError}
-                      </Text>
-                    ) : (
-                      <Text style={globalStyles.bigButtonText}>
-                        {language[currentLanguage].redeem.continue}
-                      </Text>
-                    )}
-                  </TouchableOpacity>
-                  {/* {props.values.redeemLink ? ( null ) : null } */}
+                  {props.errors.redeemLink ? (
+                    <Text style={{ paddingTop: 10 }}>
+                      {props.errors.redeemLink}
+                    </Text>
+                  ): null}
+                  {invalidLinkError ? (
+                    <Text style={{ paddingTop: 10 }}>{invalidLinkError}</Text>
+                  ): null}
                 </View>
               )}
             </View>
