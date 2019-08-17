@@ -44,7 +44,7 @@ export default function RedeemScreen(props) {
   // on balance update show you have recieved 'value' confetti
 
   useInterval(async () => {
-    console.log("watching,", balanceWatch, currentWallet.balance, watchCount);
+    // console.log("watching,", balanceWatch, currentWallet.balance, watchCount);
     setWatchCount(watchCount + 1);
     if (+currentWallet.balance > +balanceWatch || watchCount > 15) {
       setBalanceUpdated(true);
