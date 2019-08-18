@@ -44,7 +44,7 @@ export default function RedeemScreen(props) {
   // on balance update show you have recieved 'value' confetti
 
   useInterval(async () => {
-    console.log("watching,", balanceWatch, currentWallet.balance, watchCount);
+    // console.log("watching,", balanceWatch, currentWallet.balance, watchCount);
     setWatchCount(watchCount + 1);
     if (+currentWallet.balance > +balanceWatch || watchCount > 15) {
       setBalanceUpdated(true);
@@ -68,7 +68,7 @@ export default function RedeemScreen(props) {
         setLink(res);
       }
     } else {
-      setInvalidLinkError('Invalid Link');
+      setInvalidLinkError('Invalid or No Link');
     }
   };
 
@@ -80,7 +80,7 @@ export default function RedeemScreen(props) {
 
       return response;
     }
-    return { error: "Invalid link" };
+    return { error: "Invalid or No Link" };
   };
 
   const redeemPut = async (linkId, redeemAddress) => {

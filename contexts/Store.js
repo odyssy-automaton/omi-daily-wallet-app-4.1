@@ -1,10 +1,12 @@
 import React, { useState, useEffect, createContext } from "react";
+import { Linking, Clipboard } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { ethToWei, weiToEth } from "@netgum/utils";
 
 import useInterval from "../util/PollingUtil";
 import { configureContainer } from "../configSdk";
+import config from "../config";
 
 import { NativeModules } from "react-native";
 const deviceLanguage =
@@ -34,7 +36,7 @@ const Store = ({ children }) => {
         userDeviceAddress: id
       };
       let response = await fetch(
-        `https://rx4y9fk2r8.execute-api.us-east-1.amazonaws.com/dev/links/signup`,
+        `${config.apiUrl}links/signup`,
         {
           method: "post",
           body: JSON.stringify(postBody)
@@ -43,7 +45,18 @@ const Store = ({ children }) => {
       return await response.json();
     };
 
+
     const setUp = async () => {
+      const url = await Linking.getInitialURL();
+      if (url) {
+        if(url.indexOf('?id=') > -1){
+          const linkId = url.split("?id=")[1]
+          const redeemLink = `${config.redeemLinkHost}/?id=${linkId}`            
+          await Clipboard.setString(redeemLink);
+        }
+
+        }
+
       const wallet = await configureContainer();
       setSdk(wallet);
       const deviceAdress = await AsyncStorage.getItem("deviceAddress");
