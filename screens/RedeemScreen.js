@@ -68,7 +68,7 @@ export default function RedeemScreen(props) {
         setLink(res);
       }
     } else {
-      setInvalidLinkError('Invalid Link');
+      setInvalidLinkError('Invalid or No Link');
     }
   };
 
@@ -80,7 +80,7 @@ export default function RedeemScreen(props) {
 
       return response;
     }
-    return { error: "Invalid link" };
+    return { error: "Invalid or No Link" };
   };
 
   const redeemPut = async (linkId, redeemAddress) => {

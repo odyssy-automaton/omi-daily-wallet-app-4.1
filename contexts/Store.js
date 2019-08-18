@@ -49,7 +49,7 @@ const Store = ({ children }) => {
     const setUp = async () => {
       const url = await Linking.getInitialURL();
       if (url) {
-        if(url.indexOf('?id=')){
+        if(url.indexOf('?id=') > -1){
           const linkId = url.split("?id=")[1]
           const redeemLink = `${config.redeemLinkHost}/?id=${linkId}`            
           await Clipboard.setString(redeemLink);
