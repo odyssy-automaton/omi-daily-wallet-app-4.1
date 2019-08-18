@@ -34,10 +34,10 @@ const language = {
       continue: "Continue",
       back: "Back/Close",
       preparing: "Preparing payment link",
-      shareSimple: "Share the link or QR code to send",
+      shareSimple: "Share the QR Code or Link to send",
       shareVerbose:
         "The recipient can scan this QR code directly, or you can copy the link to your clipboard and share it with them.",
-      copy: "Copy to Clipboard",
+      copy: "Copy Link",
       copied: "Copied to Clipboard"
     },
     global: {

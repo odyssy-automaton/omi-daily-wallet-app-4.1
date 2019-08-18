@@ -99,7 +99,7 @@ export const globalStyles = StyleSheet.create({
     height: 60,
     width: 60,
     textAlign: "center",
-    paddingTop: 5
+    paddingTop: 2
   },
 
   Header: {
@@ -110,7 +110,7 @@ export const globalStyles = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25,
     paddingBottom: 25,
-    paddingTop: 50,
+    paddingTop: 25,
     height: "auto"
   },
   Icon: {
@@ -121,7 +121,8 @@ export const globalStyles = StyleSheet.create({
   HeaderText: {
     fontSize: 21,
     fontWeight: "700",
-    color: "rgba(0, 51, 255, 1.0)"
+    color: "rgba(0, 51, 255, 1.0)",
+    textAlignVertical: "center"
   },
   inputRow: {
     flex: 0,

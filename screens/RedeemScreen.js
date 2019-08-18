@@ -111,7 +111,7 @@ export default function RedeemScreen(props) {
         <View style={globalStyles.container}>
           {!balanceUpdated ? (
             <Fragment>
-            <Text style={globalStyles.currencyHeading}>Redeeming DAI</Text>
+            <Text style={globalStyles.HeadingOne}>Redeeming DAI</Text>
             <ActivityIndicator
               style={{ marginTop: 20 }}
               size="large"
@@ -120,17 +120,16 @@ export default function RedeemScreen(props) {
             </Fragment>
           ) : (
             <View style={globalStyles.container}>
-              <Text style={globalStyles.currencyHeading}>{language[currentLanguage].redeem.success}</Text>
-
+              <Text style={globalStyles.HeadingOne}>{language[currentLanguage].redeem.success}</Text>
+              <Text style={globalStyles.currencyHeading}>{link.amount} DAI Redeemed</Text>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(false);
                   props.navigation.navigate("Home");
                 }}
+                style={globalStyles.bigButton}
               >
-                  <Text>🎉 {link.amount} DAI 🎉</Text>
-                  <Text> Return Home</Text>
-
+                  <Text>OK</Text>
               </TouchableOpacity>
             </View>
           )}
