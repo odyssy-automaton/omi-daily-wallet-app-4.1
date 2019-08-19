@@ -5,7 +5,8 @@
   "scripts": {
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "droid-dev": "react-native run-android && react-native log-android"
   },
   "dependencies": {
     "@archanova/sdk": "^1.1.0",

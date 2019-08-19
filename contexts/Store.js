@@ -35,32 +35,26 @@ const Store = ({ children }) => {
       const postBody = {
         userDeviceAddress: id
       };
-      let response = await fetch(
-        `${config.apiUrl}links/signup`,
-        {
-          method: "post",
-          body: JSON.stringify(postBody)
-        }
-      );
+      let response = await fetch(`${config.apiUrl}links/signup`, {
+        method: "post",
+        body: JSON.stringify(postBody)
+      });
       return await response.json();
     };
-
 
     const setUp = async () => {
       const url = await Linking.getInitialURL();
       if (url) {
-        if(url.indexOf('?id=') > -1){
-          const linkId = url.split("?id=")[1]
-          const redeemLink = `${config.redeemLinkHost}/?id=${linkId}`            
+        if (url.indexOf("?id=") > -1) {
+          const linkId = url.split("?id=")[1];
+          const redeemLink = `${config.redeemLinkHost}/?id=${linkId}`;
           await Clipboard.setString(redeemLink);
         }
-
-        }
+      }
 
       const wallet = await configureContainer();
       setSdk(wallet);
       const deviceAdress = await AsyncStorage.getItem("deviceAddress");
-      console.log("deviceAdress", deviceAdress);
 
       if (!deviceAdress) {
         await AsyncStorage.setItem(
@@ -72,10 +66,7 @@ const Store = ({ children }) => {
       }
 
       const accountAddress = await AsyncStorage.getItem("accountAddress");
-
       const connectWallet = await wallet.connectAccount(accountAddress);
-
-      console.log("connectWallet", connectWallet);
 
       setCurrentWallet({
         balance: weiToEth(wallet.state.account.balance.real).toFixed(2),
@@ -86,14 +77,12 @@ const Store = ({ children }) => {
   }, []);
 
   useInterval(async () => {
-
-    if(sdk.state.account){
+    if (sdk.state.account) {
       setCurrentWallet({
         balance: weiToEth(sdk.state.account.balance.real).toFixed(2),
         sdk
       });
     }
-
   }, 10000);
 
   return (
