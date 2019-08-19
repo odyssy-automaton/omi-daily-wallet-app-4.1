@@ -1,15 +1,15 @@
 import { Linking } from "react-native";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-community/async-storage";
 import {
   sdkModules,
   createSdk,
   getSdkEnvironment,
   SdkEnvironmentNames
 } from "@archanova/sdk";
+import config from "./config";
 
- 
 export const configureContainer = async () => {
-  const sdkEnvironment = getSdkEnvironment(SdkEnvironmentNames.Sokol);
+  const sdkEnvironment = getSdkEnvironment(SdkEnvironmentNames[config.sdkEnv]);
   const sdk = createSdk(
     sdkEnvironment
       .extendConfig("actionOptions", {
@@ -37,8 +37,7 @@ export const configureContainer = async () => {
       })
       .setConfig("storageAdapter", AsyncStorage)
   );
-  await sdk.initialize().catch((err) => console.log(err));
+  await sdk.initialize().catch(err => console.log(err));
 
-  return(sdk)
-  
+  return sdk;
 };
