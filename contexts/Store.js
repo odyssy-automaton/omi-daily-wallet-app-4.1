@@ -18,6 +18,8 @@ export const LanguageContext = createContext(
   deviceLanguage.split("_")[0] === "es" ? "es" : "en"
 );
 
+export const InitialLinkContext = createContext("");
+
 export const CurrentWalletContext = createContext({
   balance: 0,
   sdk: null
@@ -28,6 +30,7 @@ const Store = ({ children }) => {
   const [currentLanguage] = useState(
     deviceLanguage.split("_")[0] === "es" ? "es" : "en"
   );
+  const [initialLink, setInitialLink] = useState('')
   const [sdk, setSdk] = useState();
 
   useEffect(() => {
@@ -48,7 +51,7 @@ const Store = ({ children }) => {
         if (url.indexOf("?id=") > -1) {
           const linkId = url.split("?id=")[1];
           const redeemLink = `${config.redeemLinkHost}/?id=${linkId}`;
-          await Clipboard.setString(redeemLink);
+          setInitialLink(redeemLink);
         }
       }
 
@@ -87,9 +90,13 @@ const Store = ({ children }) => {
 
   return (
     <LanguageContext.Provider value={[currentLanguage]}>
-      <CurrentWalletContext.Provider value={[currentWallet, setCurrentWallet]}>
-        {children}
-      </CurrentWalletContext.Provider>
+      <InitialLinkContext.Provider value={[initialLink, setInitialLink]}>
+        <CurrentWalletContext.Provider
+          value={[currentWallet, setCurrentWallet]}
+        >
+          {children}
+        </CurrentWalletContext.Provider>
+      </InitialLinkContext.Provider>
     </LanguageContext.Provider>
   );
 };

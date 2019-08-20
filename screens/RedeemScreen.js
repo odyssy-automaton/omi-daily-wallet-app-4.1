@@ -15,7 +15,11 @@ import { Formik } from "formik";
 import CurrencyIndicator from "../components/CurrencyIndicator";
 import { globalStyles } from "../constants/styles";
 import language from "../language";
-import { CurrentWalletContext, LanguageContext } from "../contexts/Store";
+import {
+  CurrentWalletContext,
+  LanguageContext,
+  InitialLinkContext
+} from "../contexts/Store";
 
 import config from "../config";
 import useInterval from "../util/PollingUtil";
@@ -32,6 +36,7 @@ export default function RedeemScreen(props) {
 
   const [currentWallet] = useContext(CurrentWalletContext);
   const [currentLanguage] = useContext(LanguageContext);
+  const [initialLink, setInitialLink] = useContext(InitialLinkContext);
 
   // get link in clipboad with param id=
   // validate right host
@@ -53,12 +58,22 @@ export default function RedeemScreen(props) {
     }
   }, watchDelay);
 
+  useEffect(() => {
+    initialCBCheck = async () => {
+      await getClipBoard();
+    };
+    initialCBCheck();
+  }, []);
+
   const getClipBoard = async () => {
     setInvalidLinkError("");
-    const clipboadData = await Clipboard.getString("redeemLinkHost");
-    if (clipboadData.indexOf(config.redeemLinkHost) > -1) {
-      setCbRedeemLink(clipboadData);
-      const res = await fetchLink(clipboadData);
+    const clipboardData =
+      initialLink || (await Clipboard.getString("redeemLinkHost"));
+
+    setInitialLink("");
+    if (clipboardData.indexOf(config.redeemLinkHost) > -1) {
+      setCbRedeemLink(clipboardData);
+      const res = await fetchLink(clipboardData);
       if (res.error) {
         setInvalidLinkError(res.error);
         setCbRedeemLink("");
@@ -68,7 +83,7 @@ export default function RedeemScreen(props) {
         setLink(res);
       }
     } else {
-      setInvalidLinkError('Invalid or No Link');
+      setInvalidLinkError("Invalid or No Link");
     }
   };
 
@@ -111,17 +126,21 @@ export default function RedeemScreen(props) {
         <View style={globalStyles.container}>
           {!balanceUpdated ? (
             <Fragment>
-            <Text style={globalStyles.HeadingOne}>Redeeming DAI</Text>
-            <ActivityIndicator
-              style={{ marginTop: 20 }}
-              size="large"
-              color="#0000ff"
-            />
+              <Text style={globalStyles.HeadingOne}>Redeeming DAI</Text>
+              <ActivityIndicator
+                style={{ marginTop: 20 }}
+                size="large"
+                color="#0000ff"
+              />
             </Fragment>
           ) : (
             <View style={globalStyles.container}>
-              <Text style={globalStyles.HeadingOne}>{language[currentLanguage].redeem.success}</Text>
-              <Text style={globalStyles.currencyHeading}>{link.amount} DAI Redeemed</Text>
+              <Text style={globalStyles.HeadingOne}>
+                {language[currentLanguage].redeem.success}
+              </Text>
+              <Text style={globalStyles.currencyHeading}>
+                {link.amount} DAI Redeemed
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(false);
@@ -130,6 +149,7 @@ export default function RedeemScreen(props) {
                 style={globalStyles.bigButton}
               >
                   <Text style={globalStyles.bigButtonTextOnly}>OK</Text>
+
               </TouchableOpacity>
             </View>
           )}
@@ -215,10 +235,10 @@ export default function RedeemScreen(props) {
                     <Text style={{ paddingTop: 10 }}>
                       {props.errors.redeemLink}
                     </Text>
-                  ): null}
+                  ) : null}
                   {invalidLinkError ? (
                     <Text style={{ paddingTop: 10 }}>{invalidLinkError}</Text>
-                  ): null}
+                  ) : null}
                 </View>
               )}
             </View>

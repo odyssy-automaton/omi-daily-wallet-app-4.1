@@ -1,13 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Image, TouchableOpacity, ImageBackground } from "react-native";
 import CurrencyIndicator from "../components/CurrencyIndicator";
 import { globalStyles } from "../constants/styles";
 import language from "../language";
-import { CurrentWalletContext, LanguageContext } from "../contexts/Store";
+import { CurrentWalletContext, LanguageContext, InitialLinkContext } from "../contexts/Store";
 
 export default function HomeScreen(props) {
   const [currentWallet] = useContext(CurrentWalletContext);
   const [currentLanguage] = useContext(LanguageContext);
+  const [initialLink] = useContext(InitialLinkContext);
+
+  useEffect(() => {
+    initialLinkCheck = async () => {
+      if (initialLink !== '') {
+        props.navigation.navigate("Redeem");
+      }
+    };
+    initialLinkCheck();
+  }, []);
 
   return (
     <View style={globalStyles.container}>
