@@ -148,7 +148,8 @@ export default function RedeemScreen(props) {
                 }}
                 style={globalStyles.bigButton}
               >
-                <Text>OK</Text>
+                  <Text style={globalStyles.bigButtonTextOnly}>OK</Text>
+
               </TouchableOpacity>
             </View>
           )}
