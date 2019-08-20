@@ -49,7 +49,12 @@ export const globalStyles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25
   },
-
+  bigButtonTextOnly: {
+    textAlign: "center",
+    fontSize: 21,
+    fontWeight: "700",
+    color: "white"
+  },
   bigButtonView: {
     borderColor: "transparent",
     borderRadius: 50,
