@@ -100,7 +100,9 @@ const SendForm = props => {
                 {language[currentLanguage].send.shareSimple}
               </Text>
               {/* <Text style={globalStyles.textLink}>{sendLink}</Text> */}
-              <QRCode value={sendLink} />
+              <View style={globalStyles.qrCode}>
+                <QRCode value={sendLink} size="120" />
+              </View>
 
               <TouchableOpacity
                 onPress={() => {

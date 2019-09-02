@@ -149,5 +149,11 @@ export const globalStyles = StyleSheet.create({
   },
   ErrorMessage: {
     color: "red",
+  },
+  qrCode: {
+    paddingTop: 15,
+    paddingRight: 15,
+    paddingLeft: 15,
+    paddingBottom: 0
   }
 });
