@@ -127,11 +127,11 @@ const SendForm = props => {
       <Formik
         initialValues={{ amount: "" }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          setAmount(values.amount);
+          setAmount(values.amount/100);
           setModalVisible(true);
 
           const accountAddress = await AsyncStorage.getItem("accountAddress");
-          const sendObj = await getSendLinkPost(values.amount, accountAddress);
+          const sendObj = await getSendLinkPost(values.amount/100, accountAddress);
           setSendLink(sendObj.url);
           setSubmitting(false);
           resetForm();
@@ -141,7 +141,7 @@ const SendForm = props => {
           if (!values.amount) {
             errors.amount = language[currentLanguage].send.required;
           }
-          if (parseFloat(values.amount) > parseFloat(currentWallet.balance)) {
+          if (parseFloat(values.amount)/100 > parseFloat(currentWallet.balance)) {
             errors.amount = language[currentLanguage].send.fundsError;
           }
           return errors;
@@ -154,14 +154,17 @@ const SendForm = props => {
             </Text>
             <Image source={require("../assets/diamond.png")} />
             <View style={globalStyles.inputRow}>
+              <Text style={globalStyles.inputText}>{(props.values.amount/100).toFixed(2)}</Text>
               <TextInput
                 style={globalStyles.inputText}
+                style={{ left: -500 }}
                 onChangeText={props.handleChange("amount")}
                 onBlur={props.handleBlur("amount")}
                 value={props.values.amount}
                 keyboardType="numeric"
                 maxLength={10}
                 placeholder={"0.00"}
+                autoFocus={true}
               />
               <Text style={globalStyles.inputTextRight}>DAI</Text>
             </View>
