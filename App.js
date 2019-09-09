@@ -7,6 +7,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import HomeScreen from "./screens/HomeScreen";
 import RedeemScreen from "./screens/RedeemScreen";
 import SendScreen from "./screens/SendScreen";
+import SendDirectScreen from "./screens/SendDirectScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import Header from "./components/Header";
 
@@ -20,6 +21,7 @@ const AppNavigator = createStackNavigator(
     },
     Redeem: RedeemScreen,
     Send: SendScreen,
+    SendDirect: SendDirectScreen,
     Settings: SettingsScreen
   },
   {

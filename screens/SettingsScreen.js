@@ -12,6 +12,12 @@ export default function SettingsScreen() {
       <Text style={globalStyles.HeadingOne}>
         {language[currentLanguage].settings.settings}
       </Text>
+      <Text
+        style={globalStyles.HeaderText}
+        onPress={() => props.navigation.navigate("SendDirect")}
+      >
+        Send to Xdai Wallet
+      </Text>
     </View>
   );
 }
