@@ -1,14 +1,44 @@
 import React, { useState, useContext } from "react";
 
-import { StyleSheet, View, ActivityIndicator } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+  Clipboard,
+  TextInput,
+  Image
+} from "react-native";
 
-import { ethToWei } from "@netgum/utils"; // returns BN
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { CurrentWalletContext } from "../contexts/Store";
+import { ethToWei, weiToEth } from "@netgum/utils"; // returns BN
+import { Formik } from "formik";
+import { CurrentWalletContext, LanguageContext } from "../contexts/Store";
+import useInterval from "../util/PollingUtil";
+
+import language from "../language";
+import { globalStyles } from "../constants/styles";
 
 const SendDirectForm = () => {
   const [currentWallet] = useContext(CurrentWalletContext);
-  const [isLoading, setLoading] = useState(true);
+  const [currentLanguage] = useContext(LanguageContext);
+  const [isLoading, setLoading] = useState(false);
+  const [currencyInput, setCurrencyInput] = useState();
+  const [watchDelay, setWatchDelay] = useState(null);
+  const [watchCount, setWatchCount] = useState(0);
+
+  useInterval(async () => {
+    setWatchCount(watchCount + 1);
+    if (watchCount > 5) {
+      setWatchDelay(null);
+      setWatchCount(0);
+      setLoading(false);
+    }
+  }, watchDelay);
+
+  setClipBoardContent = async content => {
+    await Clipboard.setString(content);
+  };
 
   return (
     <>
@@ -25,13 +55,29 @@ const SendDirectForm = () => {
         </View>
       )}
 
-      <h2>Send xDai from your wallet to another</h2>
-      <h3>Acct: {currentWallet.wallet.state.account}</h3>
+      <Text style={globalStyles.currencyHeading}>
+        {language[currentLanguage].sendDirect.willSend}
+      </Text>
+
+      {currentWallet && (
+        <View>
+          <Text style={globalStyles.currencyHeading}>
+            {currentWallet.sdk.state.account.address}
+          </Text>
+          <TouchableOpacity
+            onPress={() =>
+              setClipBoardContent(currentWallet.sdk.state.account.address)
+            }
+          >
+            <Text>copy</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       <Formik
         initialValues={{
           amount: "",
-          addr: currentWallet.wallet.state.account,
+          addr: currentWallet.sdk.state.account.address,
           dest: ""
         }}
         validate={values => {
@@ -60,11 +106,12 @@ const SendDirectForm = () => {
             console.log(estimated);
             if (ethToWei(currentWallet.balance).lt(estimated.totalCost)) {
               alert(
-                `You need more gas, at least: ${web3Service.fromWei(
+                `You need more gas, at least: ${weiToEth(
                   estimated.totalCost.toString()
                 )}`
               );
               setLoading(false);
+              setWatchDelay(null);
               setSubmitting(false);
               return false;
             }
@@ -72,24 +119,51 @@ const SendDirectForm = () => {
             const hash = await sdk.submitAccountTransaction(estimated);
           } catch (err) {
             console.log(err);
+            console.log(
+              "account state account",
+              currentWallet.sdk.state.account
+            );
+            setWatchDelay(null);
+            setLoading(false);
             alert(`Something went wrong. please try again`);
           }
 
           resetForm();
-          setLoading(false);
+          setWatchDelay(1000);
           setSubmitting(false);
         }}
       >
-        {(props) => (
-
-
+        {props => (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <View style={globalStyles.inputRow}>
+              <TextInput
+                style={globalStyles.inputText}
+                onChangeText={props.handleChange("dest")}
+                onBlur={props.handleBlur("dest")}
+                value={props.values.dest}
+                maxLength={25}
+                placeholder={"enter address..."}
+              />
+            </View>
+            {props.errors.dest && (
+              <Text style={globalStyles.ErrorMessage}>
+                ! {props.errors.dest}
+              </Text>
+            )}
+
             <Text style={globalStyles.currencyHeading}>
               {language[currentLanguage].send.willSend}
             </Text>
             <Image source={require("../assets/diamond.png")} />
             <View style={globalStyles.inputRow}>
-              <Text style={globalStyles.inputText}>{(props.values.amount/100).toFixed(2)}</Text>
+              <TouchableOpacity
+                onPress={() => currencyInput.focus()}
+                disabled={props.isSubmitting}
+              >
+                <Text style={globalStyles.inputText}>
+                  {(props.values.amount / 100).toFixed(2)}
+                </Text>
+              </TouchableOpacity>
               <TextInput
                 style={globalStyles.inputText}
                 style={{ left: -500 }}
@@ -100,6 +174,7 @@ const SendDirectForm = () => {
                 maxLength={10}
                 placeholder={"0.00"}
                 autoFocus={true}
+                ref={ref => setCurrencyInput(ref)}
               />
               <Text style={globalStyles.inputTextRight}>DAI</Text>
             </View>
@@ -110,7 +185,7 @@ const SendDirectForm = () => {
             )}
             <TouchableOpacity
               onPress={props.handleSubmit}
-              disabled={props.isSubmitting || submitToModal}
+              disabled={props.isSubmitting}
             >
               <View style={globalStyles.bigButtonView}>
                 <Image
@@ -121,7 +196,6 @@ const SendDirectForm = () => {
               </View>
             </TouchableOpacity>
           </View>
-
         )}
       </Formik>
     </>

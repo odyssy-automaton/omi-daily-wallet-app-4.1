@@ -40,11 +40,15 @@ const language = {
       copy: "Copy Link",
       copied: "Copied to Clipboard"
     },
+    sendDirect: {
+      willSend: "You will Send xDai from your wallet to another"
+    },
     global: {
       loading: "Loading"
     },
     settings: {
-      settings: "Settings"
+      settings: "Settings",
+      sendDirect: "Send to Xdai Wallet"
     }
   },
   es: {
@@ -88,11 +92,15 @@ const language = {
       copy: "Copy to Clipboard",
       copied: "Copied to Clipboard"
     },
+    sendDirect: {
+      willSend: "You will Send xDai from your wallet to another"
+    },
     global: {
       loading: "Loading"
     },
     settings: {
-      settings: "Settings"
+      settings: "Settings",
+      sendDirect: "Send to Xdai Wallet"
     }
   }
 };

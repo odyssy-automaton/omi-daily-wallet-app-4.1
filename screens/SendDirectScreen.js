@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
+import * as Keychain from "react-native-keychain";
+
 import SendDirectForm from "../components/SendDirectForm";
 import CapturePin from "../components/CapturePin";
-
-import * as Keychain from "react-native-keychain";
 
 export default function SendScreen() {
   const [loggedIn, setLogIn] = useState(false);

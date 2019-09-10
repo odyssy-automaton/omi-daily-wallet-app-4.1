@@ -4,7 +4,7 @@ import { globalStyles } from "../constants/styles";
 import language from "../language";
 import { LanguageContext } from "../contexts/Store";
 
-export default function SettingsScreen() {
+export default function SettingsScreen(props) {
   const [currentLanguage] = useContext(LanguageContext);
 
   return (
@@ -16,7 +16,7 @@ export default function SettingsScreen() {
         style={globalStyles.HeaderText}
         onPress={() => props.navigation.navigate("SendDirect")}
       >
-        Send to Xdai Wallet
+        {language[currentLanguage].settings.sendDirect}
       </Text>
     </View>
   );
