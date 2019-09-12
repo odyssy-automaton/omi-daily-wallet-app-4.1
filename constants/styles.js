@@ -36,7 +36,7 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 0,
     borderStyle: "solid",
-    backgroundColor: "rgba(0, 51, 255, 1.0)",
+    backgroundColor: "#00EB6C",
     width: 100,
     height: 100,
     textAlign: "center",
@@ -60,7 +60,7 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 0,
     borderStyle: "solid",
-    backgroundColor: "rgba(0, 51, 255, 1.0)",
+    backgroundColor: "#00EB6C",
     width: 100,
     height: 100,
     textAlign: "center",
@@ -75,7 +75,7 @@ export const globalStyles = StyleSheet.create({
   bigButtonText: {
     fontSize: 21,
     fontWeight: "700",
-    color: "rgba(0, 51, 255, 1.0)",
+    color: "#00EB6C",
     textAlign: "center",
     marginTop: 10,
   },
@@ -121,7 +121,7 @@ export const globalStyles = StyleSheet.create({
   HeaderText: {
     fontSize: 21,
     fontWeight: "700",
-    color: "rgba(0, 51, 255, 1.0)",
+    color: "#00EB6C",
     textAlignVertical: "center"
   },
   inputRow: {
@@ -133,10 +133,9 @@ export const globalStyles = StyleSheet.create({
   inputText: {
     fontSize: 28,
     fontWeight: "700",
-    borderBottomColor: "rgba(0, 51, 255, 1.0)",
-    marginRight: 5,
+    borderBottomColor: "#00EB6C",
     minWidth: 100,
-    textAlign: "left"
+    textAlign: "center"
   },
   inputTextRight: {
     fontSize: 28,

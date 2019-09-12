@@ -29,12 +29,12 @@ export default function HomeScreen(props) {
           {currentWallet ? (
             <CurrencyIndicator
               label={language[currentLanguage].home.balance}
-              amount={currentWallet.balance + " DAI"}
+              amount={"$" + currentWallet.balance}
             />
           ) : (
             <CurrencyIndicator
               label={language[currentLanguage].global.loading}
-              amount={" DAI"}
+              amount={"..."}
             />
           )}
           <View style={globalStyles.flexRow}>
@@ -44,7 +44,7 @@ export default function HomeScreen(props) {
               <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
-                  source={require("../assets/receive.png")}
+                  source={require("../assets/receive__black.png")}
                   style={{ height: 100, width: 100 }}
                   resizeMode="contain"
                 />
@@ -54,7 +54,7 @@ export default function HomeScreen(props) {
               <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
-                  source={require("../assets/send.png")}
+                  source={require("../assets/send__black.png")}
                   style={{ height: 100, width: 100 }}
                   resizeMode="contain"
                 />

@@ -114,7 +114,7 @@ const SendForm = props => {
                 <View style={globalStyles.bigButtonView}>
                   <Image
                     style={globalStyles.Icon}
-                    source={require("../assets/link.png")}
+                    source={require("../assets/link__black.png")}
                     resizeMode="contain"
                   />
                 </View>
@@ -155,8 +155,8 @@ const SendForm = props => {
               {language[currentLanguage].send.willSend}
             </Text>
             <Image source={require("../assets/diamond.png")} />
-            <View style={globalStyles.inputRow}>
-              <Text style={globalStyles.inputText}>{(props.values.amount/100).toFixed(2)}</Text>
+            <View>
+              <Text style={globalStyles.inputText}>${(props.values.amount/100).toFixed(2)}</Text>
               <TextInput
                 style={globalStyles.inputText}
                 style={{ left: -500 }}
@@ -168,7 +168,6 @@ const SendForm = props => {
                 placeholder={"0.00"}
                 autoFocus={true}
               />
-              <Text style={globalStyles.inputTextRight}>DAI</Text>
             </View>
             {props.errors.amount && (
               <Text style={globalStyles.ErrorMessage}>
@@ -182,7 +181,7 @@ const SendForm = props => {
               <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
-                  source={require("../assets/send.png")}
+                  source={require("../assets/send__black.png")}
                   resizeMode="contain"
                 />
               </View>

@@ -140,13 +140,13 @@ const SendDirectForm = () => {
               {language[currentLanguage].send.willSend}
             </Text>
             <Image source={require("../assets/diamond.png")} />
-            <View style={globalStyles.inputRow}>
+            <View>
               <TouchableOpacity
                 onPress={() => currencyInput.focus()}
                 disabled={props.isSubmitting}
               >
                 <Text style={globalStyles.inputText}>
-                  {(props.values.amount / 100).toFixed(2)}
+                  ${(props.values.amount / 100).toFixed(2)}
                 </Text>
               </TouchableOpacity>
               <TextInput
@@ -161,7 +161,6 @@ const SendDirectForm = () => {
                 autoFocus={true}
                 ref={ref => setCurrencyInput(ref)}
               />
-              <Text style={globalStyles.inputTextRight}>DAI</Text>
             </View>
             {props.errors.amount && (
               <Text style={globalStyles.ErrorMessage}>
@@ -175,7 +174,7 @@ const SendDirectForm = () => {
               <View style={globalStyles.bigButtonView}>
                 <Image
                   style={globalStyles.Icon}
-                  source={require("../assets/send.png")}
+                  source={require("../assets/send__black.png")}
                   resizeMode="contain"
                 />
               </View>
