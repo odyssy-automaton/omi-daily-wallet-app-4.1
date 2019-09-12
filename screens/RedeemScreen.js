@@ -191,7 +191,7 @@ export default function RedeemScreen(props) {
                 <View style={globalStyles.container}>
                   <CurrencyIndicator
                     label={language[currentLanguage].redeem.willRedeem}
-                    amount={`${link.amount} DAI`}
+                    amount={`${link.amount}`}
                   />
 
                   <TouchableOpacity
@@ -201,7 +201,7 @@ export default function RedeemScreen(props) {
                     <View style={globalStyles.bigButtonView}>
                       <Image
                         style={globalStyles.Icon}
-                        source={require("../assets/receive.png")}
+                        source={require("../assets/receive__black.png")}
                         resizeMode="contain"
                       />
                     </View>
