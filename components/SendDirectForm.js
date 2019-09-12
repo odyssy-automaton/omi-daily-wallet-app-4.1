@@ -59,21 +59,6 @@ const SendDirectForm = () => {
         {language[currentLanguage].sendDirect.willSend}
       </Text>
 
-      {currentWallet && (
-        <View>
-          <Text style={globalStyles.currencyHeading}>
-            {currentWallet.sdk.state.account.address}
-          </Text>
-          <TouchableOpacity
-            onPress={() =>
-              setClipBoardContent(currentWallet.sdk.state.account.address)
-            }
-          >
-            <Text>copy</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
       <Formik
         initialValues={{
           amount: "",
@@ -142,7 +127,7 @@ const SendDirectForm = () => {
                 onBlur={props.handleBlur("dest")}
                 value={props.values.dest}
                 maxLength={25}
-                placeholder={"enter address..."}
+                placeholder={"Destination Address"}
               />
             </View>
             {props.errors.dest && (

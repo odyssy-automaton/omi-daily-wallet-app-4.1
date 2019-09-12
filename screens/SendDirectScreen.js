@@ -4,6 +4,7 @@ import * as Keychain from "react-native-keychain";
 
 import SendDirectForm from "../components/SendDirectForm";
 import CapturePin from "../components/CapturePin";
+import { globalStyles } from "../constants/styles";
 
 export default function SendScreen() {
   const [loggedIn, setLogIn] = useState(false);
@@ -42,7 +43,7 @@ export default function SendScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={globalStyles.container}>
       {loggedIn ? (
         <SendDirectForm />
       ) : (

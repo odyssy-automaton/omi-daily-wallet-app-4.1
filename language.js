@@ -41,14 +41,14 @@ const language = {
       copied: "Copied to Clipboard"
     },
     sendDirect: {
-      willSend: "You will Send xDai from your wallet to another"
+      willSend: "Send xDAI to another"
     },
     global: {
       loading: "Loading"
     },
     settings: {
-      settings: "Settings",
-      sendDirect: "Send to Xdai Wallet"
+      settings: "Advanced",
+      sendDirect: "Send to xDAI Wallet"
     }
   },
   es: {
@@ -93,14 +93,14 @@ const language = {
       copied: "Copied to Clipboard"
     },
     sendDirect: {
-      willSend: "You will Send xDai from your wallet to another"
+      willSend: "Send xDAI to another"
     },
     global: {
       loading: "Loading"
     },
     settings: {
-      settings: "Settings",
-      sendDirect: "Send to Xdai Wallet"
+      settings: "Advanced",
+      sendDirect: "Send to xDAI Wallet"
     }
   }
 };

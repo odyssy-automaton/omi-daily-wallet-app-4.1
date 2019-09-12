@@ -79,11 +79,6 @@ export const globalStyles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
   },
-  currencyText: {
-    fontSize: 28,
-    fontWeight: "bold"
-  },
-
   HeadingOne: {
     fontSize: 28,
     fontWeight: "bold"
@@ -155,5 +150,9 @@ export const globalStyles = StyleSheet.create({
     paddingRight: 15,
     paddingLeft: 15,
     paddingBottom: 0
+  },
+  padding: {
+    paddingRight: 25,
+    paddingLeft: 25
   }
 });
