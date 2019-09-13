@@ -30,8 +30,6 @@ const SendForm = props => {
   const [amount, setAmount] = useState(false);
   const [submitToModal, setsubmitToModal] = useState(false);
 
-  console.log("send current balance", currentWallet.balance);
-
   setClipBoardContent = async content => {
     await Clipboard.setString(content);
   };
