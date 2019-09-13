@@ -99,7 +99,6 @@ export default function RedeemScreen(props) {
   };
 
   const redeemPut = async (linkId, redeemAddress) => {
-    console.log("redeem!", linkId, redeemAddress);
 
     const putBody = {
       linkId,
@@ -168,7 +167,6 @@ export default function RedeemScreen(props) {
               link.linkId,
               currentWallet.sdk.state.account.address
             );
-            console.log("redeemResponse", redeemResponse);
             if (!redeemResponse.error) {
               setWatchDelay(1000);
             } else {
