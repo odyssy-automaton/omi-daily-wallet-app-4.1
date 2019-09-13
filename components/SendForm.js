@@ -93,7 +93,7 @@ const SendForm = props => {
                   setModalVisible(false);
                 }}
               /> */}
-              <Text style={globalStyles.HeadingOne}>Send {amount} DAI</Text>
+              <Text style={globalStyles.HeadingOne}>Send ${amount}</Text>
               <Text style={globalStyles.paragraph}>
                 {language[currentLanguage].send.shareSimple}
               </Text>
@@ -148,7 +148,7 @@ const SendForm = props => {
         }}
       >
         {props => (
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <View style={{ alignItems: "center", justifyContent: "flex-start" }}>
             <Text style={globalStyles.currencyHeading}>
               {language[currentLanguage].send.willSend}
             </Text>
@@ -156,7 +156,6 @@ const SendForm = props => {
             <View>
               <Text style={globalStyles.inputText}>${(props.values.amount/100).toFixed(2)}</Text>
               <TextInput
-                style={globalStyles.inputText}
                 style={{ left: -500 }}
                 onChangeText={props.handleChange("amount")}
                 onBlur={props.handleBlur("amount")}
@@ -168,20 +167,16 @@ const SendForm = props => {
               />
             </View>
             {props.errors.amount && (
-              <Text style={globalStyles.ErrorMessage}>
+              <Text style={globalStyles.ErrorMessageSmall}>
                 ! {props.errors.amount}
               </Text>
-            )}
+            )}            
             <TouchableOpacity
               onPress={props.handleSubmit}
               disabled={props.isSubmitting || submitToModal}
             >
-              <View style={globalStyles.bigButtonView}>
-                <Image
-                  style={globalStyles.Icon}
-                  source={require("../assets/send__black.png")}
-                  resizeMode="contain"
-                />
+              <View style={globalStyles.smallButtonView}>
+                <Text>Continue</Text>
               </View>
             </TouchableOpacity>
           </View>

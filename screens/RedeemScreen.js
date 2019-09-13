@@ -216,10 +216,13 @@ export default function RedeemScreen(props) {
                   {cbRedeemLink ? (
                     <Text>{language[currentLanguage].redeem.imported}</Text>
                   ) : (
-                    <Button
+                    <TouchableOpacity
                       onPress={() => getClipBoard()}
-                      title="Check Clipboard"
-                    />
+                    >
+                      <View style={globalStyles.smallButtonView}>
+                        <Text>Check Clipboard</Text>
+                      </View>
+                    </TouchableOpacity>
                   )}
 
                   <TextInput

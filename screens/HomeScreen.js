@@ -45,7 +45,6 @@ export default function HomeScreen(props) {
                 <Image
                   style={globalStyles.Icon}
                   source={require("../assets/receive__black.png")}
-                  style={{ height: 100, width: 100 }}
                   resizeMode="contain"
                 />
               </View>
@@ -55,7 +54,6 @@ export default function HomeScreen(props) {
                 <Image
                   style={globalStyles.Icon}
                   source={require("../assets/send__black.png")}
-                  style={{ height: 100, width: 100 }}
                   resizeMode="contain"
                 />
               </View>

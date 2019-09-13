@@ -13,7 +13,7 @@ export default function SettingsScreen(props) {
   };
 
   return (
-    <View style={globalStyles.container}>
+    <View style={globalStyles.containerSmall}>
       <Text style={globalStyles.HeadingOne}>
         {language[currentLanguage].settings.settings}
       </Text>

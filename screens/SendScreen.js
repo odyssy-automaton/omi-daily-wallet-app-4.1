@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
+import { globalStyles } from "../constants/styles";
 import SendForm from "../components/SendForm";
 import CapturePin from "../components/CapturePin";
 
@@ -42,7 +43,7 @@ export default function SendScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={globalStyles.containerSmall}>
       {loggedIn ? (
         <SendForm />
       ) : (

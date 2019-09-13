@@ -27,7 +27,7 @@ export default function CapturePin(props) {
 
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.HeadingOne}>{label}</Text>
+      <Text style={globalStyles.HeadingTwo}>{label}</Text>
       <View style={globalStyles.PinRow}>
         <Text style={globalStyles.Pin}>{pin.charAt(0) ? '*' : ''}</Text>
         <Text style={globalStyles.Pin}>{pin.charAt(1) ? '*' : ''}</Text>
