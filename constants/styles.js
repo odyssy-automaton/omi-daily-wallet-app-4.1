@@ -137,6 +137,13 @@ export const globalStyles = StyleSheet.create({
     minWidth: 100,
     textAlign: "center"
   },
+  inputTextSmall: {
+    fontSize: 18,
+    fontWeight: "700",
+    borderBottomColor: "#00EB6C",
+    minWidth: 100,
+    textAlign: "center"
+  },
   inputTextRight: {
     fontSize: 28,
     fontWeight: "700"
