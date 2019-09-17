@@ -1,6 +1,8 @@
 # Daily Wallet App
 
-===
+
+Proof of Concept android native app to show abridged wallet integration into a link drop style crypto wallet.
+
 
 ## Use cases
 
@@ -84,7 +86,7 @@ upload built APKs to s3 for download links
 
 https://omi-daily-wallet.odyssy.io/download.html
 
-### Build command for apk (after the second command you may have to delete duplicate files in the res folder). Out put APKs will be in the android build folder.
+### Build command for apk (after the second command you may have to delete duplicate files in the res folder). Add keystore settings. Output APKs will be in the android build folder.
 
 ### for xdai:
 
