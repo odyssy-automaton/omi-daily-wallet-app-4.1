@@ -6,12 +6,12 @@
 
 overview & functionality
 
-- Abridged integration (link?)
+- [Abridged integration](http://abridged.io/)
 
 - Link drop flow
-- Send flow
-- Redeem flow
-- Direct send flow
+    - Send flow - Send a link to any user with the app. Link is generated and saved to db with status of unredeemed
+    - Redeem flow - Copy link or deep link in with a link shared from another user. Gardian sends funds to recipient and marks db link redeemed
+    - Direct send flow - directly sends to another xDAI wallet.
 
 ## API
 
@@ -58,32 +58,51 @@ The most recent version of the docs are available [here](https://github.com/reac
 
 ## Available Scripts
 
-### `npm start`
+### `yarn start`
 
-Runs your app in development mode.
+Runs your app in development mode. Starts Metro Bundler
 
 ```
-npm start -- --reset-cache
+yarn start -- --reset-cache
 ```
 
-#### `npm run ios`
+#### `react-native run-android`
 
-Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+Attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup).
 
-#### `npm run android`
+#### `react-native log-android`
 
-Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup).
+logs messages to the terminal
 
 ## Deployment
 
 Currently this application is not hosted in the iOS or Andriod app stores. Production builds are created and deployed to AWS S3 and user are directed to download and side load the apk file onto thier machine.
 
-There is a small website that is accessed from the sedn links. It either deeplinks the user into the application, if they have it installed on thier phone, or it instructs the user to download and install the app.
+There is a small website that is accessed from the send links. It either deeplinks the user into the application, if they have it installed on thier phone, or it instructs the user to download and install the app. 
+
+upload built APKs to s3 for download links
 
 https://omi-daily-wallet.odyssy.io/download.html
 
-### Build command
+### Build command for apk (after the second command you may have to delete duplicate files in the res folder). Out put APKs will be in the android build folder.
+
+### for xdai:
 
 ```
-npm build
+export NODE_ENV=production
+
+```
+### for sokol:
+
+```
+export NODE_ENV=development
+
+```
+
+```
+
+mkdir -p android/app/src/main/assets && rm -rf android/app/build && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+```
+```
+cd android && ./gradlew clean assembleRelease && cd ../
 ```
