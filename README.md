@@ -1,7 +1,7 @@
 # Daily Wallet App
 
 
-Proof of Concept android native app to show abridged wallet integration into a link drop style crypto wallet.
+Proof of Concept - android 4.1+ native app to show abridged wallet integration into a link drop style crypto wallet. Collaboration between OMI, Abridged and Odyssy
 
 
 ## Use cases
