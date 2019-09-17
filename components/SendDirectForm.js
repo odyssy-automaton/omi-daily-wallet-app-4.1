@@ -10,6 +10,7 @@ import {
   TextInput,
   Image
 } from "react-native";
+import { withNavigation } from 'react-navigation';
 
 import { ethToWei, weiToEth } from "@netgum/utils"; // returns BN
 import { Formik } from "formik";
@@ -19,7 +20,7 @@ import useInterval from "../util/PollingUtil";
 import language from "../language";
 import { globalStyles } from "../constants/styles";
 
-const SendDirectForm = () => {
+const SendDirectForm = props => {
   const [currentWallet] = useContext(CurrentWalletContext);
   const [currentLanguage] = useContext(LanguageContext);
   const [isLoading, setLoading] = useState(false);
@@ -34,6 +35,8 @@ const SendDirectForm = () => {
       setWatchDelay(null);
       setWatchCount(0);
       setLoading(false);
+      
+      props.navigation.navigate("Home");
     }
   }, watchDelay);
 
@@ -64,7 +67,8 @@ const SendDirectForm = () => {
             initialValues={{
               amount: "",
               addr: currentWallet.sdk.state.account.address,
-              dest: destAddr
+              dest: ""
+
             }}
             validate={values => {
               let errors = {};
@@ -79,7 +83,8 @@ const SendDirectForm = () => {
             }}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
               const sdk = currentWallet.sdk;
-              const bnAmmount = ethToWei(values.amount);
+              const bnAmount = ethToWei(+values.amount / 100);
+
 
               setLoading(true);
               try {
@@ -108,12 +113,14 @@ const SendDirectForm = () => {
                   "account state account",
                   currentWallet.sdk.state.account
                 );
+
                 setWatchDelay(null);
                 setLoading(false);
                 alert(`Something went wrong. please try again`);
               }
 
               resetForm();
+
               setWatchDelay(1000);
               setSubmitting(false);
             }}
@@ -195,6 +202,7 @@ const SendDirectForm = () => {
                 </View>
               );
             }}
+
           </Formik>
         </>
       )}
@@ -202,4 +210,4 @@ const SendDirectForm = () => {
   );
 };
 
-export default SendDirectForm;
+export default withNavigation(SendDirectForm);
