@@ -154,6 +154,13 @@ export const globalStyles = StyleSheet.create({
     textAlign: "center",
     marginBottom: -45
   },
+  inputTextSmall: {
+    fontSize: 18,
+    fontWeight: "700",
+    borderBottomColor: "#00EB6C",
+    minWidth: 100,
+    textAlign: "center"
+  },
   inputTextRight: {
     fontSize: 28,
     fontWeight: "700"

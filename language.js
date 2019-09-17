@@ -41,7 +41,8 @@ const language = {
       copied: "Copied to Clipboard"
     },
     sendDirect: {
-      willSend: "Send xDAI to another"
+      willSend: "Send xDAI to another",
+      pasteAddr: "Press to paste address"
     },
     global: {
       loading: "Loading"
@@ -93,7 +94,8 @@ const language = {
       copied: "Copied to Clipboard"
     },
     sendDirect: {
-      willSend: "Send xDAI to another"
+      willSend: "Send xDAI to another",
+      pasteAddr: "Press to paste address"
     },
     global: {
       loading: "Loading"

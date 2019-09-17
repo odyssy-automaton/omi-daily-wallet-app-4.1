@@ -21,7 +21,7 @@ export default function SettingsScreen(props) {
       {currentWallet && (
         <View style={globalStyles.padding}>
           <Text style={globalStyles.currencyHeading}>Wallet Address</Text>
-          <Text style={globalStyles.paragraph}>
+          <Text style={globalStyles.inputTextSmall}>
             {currentWallet.sdk.state.account.address}
           </Text>
           <TouchableOpacity
