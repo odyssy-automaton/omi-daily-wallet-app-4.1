@@ -90,7 +90,7 @@ const SendDirectForm = props => {
               try {
                 const estimated = await sdk.estimateAccountTransaction(
                   values.dest,
-                  bnAmmount,
+                  bnAmount,
                   null
                 );
 
@@ -135,8 +135,9 @@ const SendDirectForm = props => {
                 >
                   <TouchableOpacity
                     onPress={async () => {
-                      //returns promise for some reason
+                      //returns promise
                       props.values.dest = await getClipBoardContent();
+                      currencyInput.focus();
                     }}
                     disabled={props.isSubmitting}
                   >
@@ -160,9 +161,10 @@ const SendDirectForm = props => {
                       onPress={() => currencyInput.focus()}
                       disabled={props.isSubmitting}
                     >
-                      <Text style={globalStyles.inputText}>
+                      <Text style={globalStyles.currencyHeading}>
                         ${(props.values.amount / 100).toFixed(2)}
                       </Text>
+
                     </TouchableOpacity>
                   </View>
                   {props.errors.amount && (
@@ -174,12 +176,8 @@ const SendDirectForm = props => {
                     onPress={props.handleSubmit}
                     disabled={props.isSubmitting}
                   >
-                    <View style={globalStyles.bigButtonView}>
-                      <Image
-                        style={globalStyles.Icon}
-                        source={require("../assets/send__black.png")}
-                        resizeMode="contain"
-                      />
+                    <View style={globalStyles.smallButtonView}>
+                      <Text>{language[currentLanguage].sendDirect.continue}</Text>
                     </View>
                   </TouchableOpacity>
                   <View style={globalStyles.inputRowSmall}>

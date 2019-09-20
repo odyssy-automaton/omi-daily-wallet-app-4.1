@@ -58,8 +58,12 @@ const Store = ({ children }) => {
       const wallet = await configureContainer();
       setSdk(wallet);
       const deviceAdress = await AsyncStorage.getItem("deviceAddress");
-
+      console.log('deviceAdress', deviceAdress, !deviceAdress);
+      console.log('deviceAdress bool', !deviceAdress);
+      
       if (!deviceAdress) {
+        console.log('setting up inner');
+        
         await AsyncStorage.setItem(
           "deviceAddress",
           wallet.state.device.address
@@ -70,9 +74,9 @@ const Store = ({ children }) => {
 
       const accountAddress = await AsyncStorage.getItem("accountAddress");
       const connectWallet = await wallet.connectAccount(accountAddress);
-
+      
       setCurrentWallet({
-        balance: weiToEth(wallet.state.account.balance.real).toFixed(2),
+        balance: (Math.floor(weiToEth(wallet.state.account.balance.real) * 100) / 100).toFixed(2),
         sdk: wallet
       });
     };
@@ -81,8 +85,13 @@ const Store = ({ children }) => {
 
   useInterval(async () => {
     if (sdk.state.account) {
+
+      console.log('balance', weiToEth(sdk.state.account.balance.real));
+      console.log('balance floor', Math.floor(weiToEth(sdk.state.account.balance.real) * 100) / 100);
+      console.log('balance floor fixed', (Math.floor(weiToEth(sdk.state.account.balance.real) * 100) / 100).toFixed(2));
+      
       setCurrentWallet({
-        balance: weiToEth(sdk.state.account.balance.real).toFixed(2),
+        balance: (Math.floor(weiToEth(sdk.state.account.balance.real) * 100) / 100).toFixed(2),
         sdk
       });
     }

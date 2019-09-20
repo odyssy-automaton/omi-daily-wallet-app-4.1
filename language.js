@@ -38,11 +38,13 @@ const language = {
       shareVerbose:
         "The recipient can scan this QR code directly, or you can copy the link to your clipboard and share it with them.",
       copy: "Copy Link",
-      copied: "Copied to Clipboard"
+      copied: "Copied to Clipboard",
+      continue: "Continue"
     },
     sendDirect: {
       willSend: "Send xDAI to another",
-      pasteAddr: "Press to paste address"
+      pasteAddr: "Press to paste address",
+      continue: "Continue"
     },
     global: {
       loading: "Loading"
@@ -91,11 +93,14 @@ const language = {
       shareVerbose:
         "The recipient can scan this QR code directly, or you can copy the link to your clipboard and share it with them.",
       copy: "Copy to Clipboard",
-      copied: "Copied to Clipboard"
+      copied: "Copied to Clipboard",
+      continue: "Continue"
+
     },
     sendDirect: {
       willSend: "Send xDAI to another",
-      pasteAddr: "Press to paste address"
+      pasteAddr: "Press to paste address",
+      continue: "Continue"
     },
     global: {
       loading: "Loading"

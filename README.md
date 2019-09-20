@@ -84,7 +84,7 @@ There is a small website that is accessed from the send links. It either deeplin
 
 upload built APKs to s3 for download links
 
-https://omi-daily-wallet.odyssy.io/download.html
+[Download](https://omi-daily-wallet.odyssy.io/download.html)
 
 ### Build command for apk (after the second command you may have to delete duplicate files in the res folder). Add keystore settings. Output APKs will be in the android build folder.
 
@@ -108,3 +108,9 @@ mkdir -p android/app/src/main/assets && rm -rf android/app/build && react-native
 ```
 cd android && ./gradlew clean assembleRelease && cd ../
 ```
+
+### links:
+
+[xdai bridge](https://dai-bridge.poa.network/)
+
+[block explorer](https://blockscout.com/poa/xdai)
