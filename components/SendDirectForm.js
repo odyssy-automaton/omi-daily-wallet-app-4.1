@@ -83,14 +83,14 @@ const SendDirectForm = props => {
             }}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
               const sdk = currentWallet.sdk;
-              const bnAmount = ethToWei(+values.amount / 100);
+              const bnAmount = ethToWei(values.amount);
 
 
               setLoading(true);
               try {
                 const estimated = await sdk.estimateAccountTransaction(
                   values.dest,
-                  bnAmmount,
+                  bnAmount,
                   null
                 );
 
@@ -174,7 +174,7 @@ const SendDirectForm = props => {
                     onPress={props.handleSubmit}
                     disabled={props.isSubmitting}
                   >
-                    <View style={globalStyles.bigButtonView}>
+                    <View style={globalStyles.smallButtonView}>
                       <Image
                         style={globalStyles.Icon}
                         source={require("../assets/send__black.png")}

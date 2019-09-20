@@ -26,7 +26,9 @@ export default function SettingsScreen(props) {
           </Text>
           <TouchableOpacity
             onPress={() =>
-              setClipBoardContent(currentWallet.sdk.state.account.address)
+              {console.log(currentWallet.sdk.state.account.address);
+              
+              setClipBoardContent(currentWallet.sdk.state.account.address)}
             }
           >
             <Text style={globalStyles.bigButtonText}>Copy Address</Text>
