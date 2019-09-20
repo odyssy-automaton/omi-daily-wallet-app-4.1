@@ -127,11 +127,14 @@ const SendForm = props => {
       <Formik
         initialValues={{ amount: "" }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          setAmount(values.amount/100);
+          setAmount(values.amount / 100);
           setModalVisible(true);
 
           const accountAddress = await AsyncStorage.getItem("accountAddress");
-          const sendObj = await getSendLinkPost(values.amount/100, accountAddress);
+          const sendObj = await getSendLinkPost(
+            values.amount / 100,
+            accountAddress
+          );
           setSendLink(sendObj.url);
           setSubmitting(false);
           resetForm();
@@ -141,7 +144,10 @@ const SendForm = props => {
           if (!values.amount) {
             errors.amount = language[currentLanguage].send.required;
           }
-          if (parseFloat(values.amount)/100 > parseFloat(currentWallet.balance)) {
+          if (
+            parseFloat(values.amount) / 100 >
+            parseFloat(currentWallet.balance)
+          ) {
             errors.amount = language[currentLanguage].send.fundsError;
           }
           return errors;
@@ -154,7 +160,9 @@ const SendForm = props => {
             </Text>
             <Image source={require("../assets/diamond.png")} />
             <View>
-              <Text style={globalStyles.inputText}>${(props.values.amount/100).toFixed(2)}</Text>
+              <Text style={globalStyles.inputText}>
+                ${(props.values.amount / 100).toFixed(2)}
+              </Text>
               <TextInput
                 style={{ left: -500 }}
                 onChangeText={props.handleChange("amount")}
@@ -170,13 +178,13 @@ const SendForm = props => {
               <Text style={globalStyles.ErrorMessageSmall}>
                 ! {props.errors.amount}
               </Text>
-            )}            
+            )}
             <TouchableOpacity
               onPress={props.handleSubmit}
               disabled={props.isSubmitting || submitToModal}
             >
               <View style={globalStyles.smallButtonView}>
-                <Text>Continue</Text>
+                <Text>{language[currentLanguage].sendDirect.continue}</Text>
               </View>
             </TouchableOpacity>
           </View>
